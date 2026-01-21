@@ -1,16 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>博客</title>
-	</head>
 	<body>
-    <a href="/">返回首页</a>
-    <a href="/about/">关于</a>
-    <a href="/blog/">博客</a>
-
-    <h1>我的博客</h1>
+		<BaseLayout pageTitle={'我的博客'}>
+			<ul>
+				<li><a href="/posts/post-1/">文章 1</a></li>
+			</ul>
+		</BaseLayout>
 	</body>
 </html>
