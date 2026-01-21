@@ -1,11 +1,15 @@
 ---
+import BlogPost from '../components/BlogPost.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// 导入指定目录下的所有 Markdown 文件，立即加载，不是懒加载
+const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
 ---
 <html lang="en">
 	<body>
 		<BaseLayout pageTitle={'我的博客'}>
-			<ul>
-				<li><a href="/posts/post-1/">文章 1</a></li>
+			<ul style="padding: 0">
+				{allPosts.map((post: any) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
 			</ul>
 		</BaseLayout>
 	</body>

@@ -30,6 +30,7 @@ Astro使我们可以用Markdown编写内容，并使用CSS和JS来美化页面�
 - 全局样式：通过import全局样式文件`.css`来加载样式代码
 - frontmatter：在文件顶部写入的JS脚本，编译时运行
 - 脚本：在`<script>`标签中编写脚本，也可以导入`.js`文件
+- 页面路由规则与Next.js中一样，`pages`目录下的文件均可以通过路径访问，比如/blog就是/pages/blog.astro，动态路由也是一样
 
 ## 组件
 
@@ -45,3 +46,25 @@ Astro使我们可以用Markdown编写内容，并使用CSS和JS来美化页面�
 - Markdown内容布局：
   1. 创建一个布局组件，可以导入一些主题样式代码
   2. 在`.md`文件的frontmatter中添加layout配置，选择布局组件即可
+
+## API
+
+- 读取本地文章：`Object.values(import.meta.glob('./posts/*.md', { eager: true }))`
+- 动态路由：需要向外界导出`getStaticPaths`方法，该方法返回一个支持的路由配置数组，数组的每一项中都包含params和props
+
+```js
+export async function getStaticPaths() {
+  const allPosts = Object.values(
+    import.meta.glob("../posts/*.md", { eager: true }),
+  );
+
+  return [
+    { params: { tag: "astro" }, props: { posts: allPosts } },
+    { params: { tag: "successes" }, props: { posts: allPosts } },
+    { params: { tag: "community" }, props: { posts: allPosts } },
+    { params: { tag: "blogging" }, props: { posts: allPosts } },
+    { params: { tag: "setbacks" }, props: { posts: allPosts } },
+    { params: { tag: "learning in public" }, props: { posts: allPosts } },
+  ];
+}
+```

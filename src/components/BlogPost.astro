@@ -1,0 +1,29 @@
+---
+const {url, title} = Astro.props;
+---
+<li class="blogpost-item"><a href={url}>{title}</a></li>
+<style>
+	.blogpost-item {
+		margin: 0.7em 0;
+		padding: 0.7em 1.2em;
+		border-radius: 6px;
+		background: #f6f8fa;
+		transition: background 0.2s;
+		list-style: none;
+		box-shadow: 0 1px 6px 0 rgba(60,60,60,0.04);
+	}
+	.blogpost-item:hover {
+		background: #e3f0ff;
+	}
+	.blogpost-item a {
+		color: #3a8dde;
+		font-weight: 600;
+		text-decoration: none;
+		font-size: 1.1em;
+		transition: color 0.2s;
+	}
+	.blogpost-item a:hover {
+		color: #e67e22;
+		text-decoration: underline;
+	}
+</style>
