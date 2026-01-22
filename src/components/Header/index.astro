@@ -1,0 +1,83 @@
+---
+import Menu from '../Menu.astro';
+import Navigation from '../Navigation.astro';
+import ThemeIcon from '../ThemeIcon.astro';
+---
+<header class="header-wrapper">
+  <div class="header-container">
+    <a href="/" class="site-title">缪培康</a>
+    <div class="nav-group">
+      <Navigation />
+      <div class="header-actions">
+        <ThemeIcon />
+        <Menu />
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+@font-face {
+  font-family: 'ZCOOL KuaiLe';
+  src: url('/src/assets/ZCOOLKuaiLe-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.header-wrapper {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 3px rgba(177, 177, 177, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 0;
+}
+
+.header-container {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+  letter-spacing: -0.02em;
+  position: relative;
+  font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+.site-title:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .nav-group {
+    gap: 1rem;
+  }
+}
+</style>

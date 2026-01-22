@@ -1,0 +1,126 @@
+---
+const { title, subtitle } = Astro.props;
+---
+
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">{title}</h1>
+      {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    </div>
+    <div class="hero-illustration">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- 波浪装饰 -->
+        <defs>
+          <linearGradient id="wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        
+        <!-- 背景圆圈 -->
+        <circle cx="100" cy="150" r="80" fill="#bfdbfe" opacity="0.3"/>
+        <circle cx="300" cy="100" r="60" fill="#ddd6fe" opacity="0.3"/>
+        
+        <!-- 波浪线条 -->
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+          <path
+            d={`M ${150 + i * 15} ${50 + i * 8} Q ${200 + i * 15} ${30 + i * 8} ${250 + i * 15} ${50 + i * 8} T ${350 + i * 15} ${50 + i * 8}`}
+            fill="none"
+            stroke="url(#wave-gradient)"
+            stroke-width="3"
+            opacity={0.7 - i * 0.05}
+          />
+        ))}
+        
+        <!-- 人物简笔画 -->
+        <g transform="translate(200, 180)">
+          <!-- 头部 -->
+          <circle cx="0" cy="-30" r="20" fill="#fbbf24"/>
+          <!-- 身体 -->
+          <rect x="-15" y="-10" width="30" height="35" rx="5" fill="#60a5fa"/>
+          <!-- 腿部 -->
+          <rect x="-12" y="25" width="10" height="20" rx="3" fill="#1e293b"/>
+          <rect x="2" y="25" width="10" height="20" rx="3" fill="#1e293b"/>
+          <!-- 眼睛 -->
+          <circle cx="-6" cy="-32" r="2" fill="#1e293b"/>
+          <circle cx="6" cy="-32" r="2" fill="#1e293b"/>
+          <!-- 嘴巴 -->
+          <path d="M -6 -25 Q 0 -22 6 -25" fill="none" stroke="#1e293b" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    background: linear-gradient(180deg, rgba(224, 242, 254, 0.5) 0%, rgba(240, 249, 255, 0.3) 100%);
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    border-radius: 0 0 32px 32px;
+    overflow: hidden;
+  }
+  
+  .hero-container {
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  
+  .hero-content {
+    z-index: 2;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.3rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+  }
+  
+  .hero-illustration {
+    position: relative;
+  }
+  
+  .hero-illustration svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.1));
+  }
+  
+  @media (max-width: 768px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .hero-title {
+      font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .hero-illustration {
+      order: -1;
+    }
+  }
+</style>

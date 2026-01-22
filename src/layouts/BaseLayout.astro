@@ -1,5 +1,5 @@
 ---
-import Header from '../components/Header.astro';
+import Header from '../components/Header/index.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 const {pageTitle} = Astro.props;
@@ -14,10 +14,29 @@ const {pageTitle} = Astro.props;
   </head>
   <body>
     <Header />
-    <h1>{pageTitle}</h1>
-
-    <slot />
-
+    <main class="main-content">
+      <div class="content-wrapper">
+        <slot />
+      </div>
+    </main>
     <Footer />
   </body>
 </html>
+
+<style>
+  .main-content {
+    min-height: calc(100vh - 200px);
+  }
+  
+  .content-wrapper {
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .content-wrapper {
+      padding: 2rem 1rem;
+    }
+  }
+</style>

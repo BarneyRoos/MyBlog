@@ -1,7 +1,35 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro"
+import Hero from "../components/Hero.astro"
 const pageTitle = "海川的全栈之旅";
 ---
 <BaseLayout pageTitle={pageTitle}>
-  <h2>我超棒的博客副标题</h2>
+  <Hero 
+    title="欢迎来到我的技术博客" 
+    subtitle="分享前端、后端、AI和全栈开发的学习笔记与实践经验"
+  />
+  <section class="intro-section">
+    <h2>关于这个博客</h2>
+    <p>这里记录了我在全栈开发道路上的探索与成长，涵盖 Astro、React、Node.js、数据库等技术栈。</p>
+  </section>
 </BaseLayout>
+
+<style>
+  .intro-section {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .intro-section h2 {
+    color: #334155;
+    margin-top: 0;
+  }
+  
+  .intro-section p {
+    color: #475569;
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+</style>

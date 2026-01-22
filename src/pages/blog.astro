@@ -2,16 +2,58 @@
 import BlogPost from '../components/BlogPost.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from "astro:content";
-// 导入指定目录下的所有 Markdown 文件，立即加载，不是懒加载
-// const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
 const allPosts = await getCollection("blog");
 ---
-<html lang="en">
-	<body>
-		<BaseLayout pageTitle={'我的博客'}>
-			<ul style="padding: 0">
-				{allPosts.map((post: any) => <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />)}
-			</ul>
-		</BaseLayout>
-	</body>
-</html>
+<BaseLayout pageTitle={'我的博客'}>
+  <div class="blog-header">
+    <h1 class="page-title">博客文章</h1>
+    <p class="page-subtitle">分享技术见解与开发经验</p>
+  </div>
+  
+  <div class="posts-grid">
+    {allPosts.map((post: any) => (
+      <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem;
+  }
+  
+  .page-subtitle {
+    color: #64748b;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 768px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .page-title {
+      font-size: 2rem;
+    }
+  }
+</style>

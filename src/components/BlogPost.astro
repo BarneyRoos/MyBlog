@@ -1,29 +1,56 @@
 ---
 const {url, title} = Astro.props;
 ---
-<li class="blogpost-item"><a href={url}>{title}</a></li>
+<article class="blogpost-card">
+  <a href={url} class="blogpost-link">
+    <h3 class="blogpost-title">{title}</h3>
+    <span class="read-more">阅读全文 →</span>
+  </a>
+</article>
+
 <style>
-	.blogpost-item {
-		margin: 0.7em 0;
-		padding: 0.7em 1.2em;
-		border-radius: 6px;
-		background: #f6f8fa;
-		transition: background 0.2s;
-		list-style: none;
-		box-shadow: 0 1px 6px 0 rgba(60,60,60,0.04);
-	}
-	.blogpost-item:hover {
-		background: #e3f0ff;
-	}
-	.blogpost-item a {
-		color: #3a8dde;
-		font-weight: 600;
-		text-decoration: none;
-		font-size: 1.1em;
-		transition: color 0.2s;
-	}
-	.blogpost-item a:hover {
-		color: #e67e22;
-		text-decoration: underline;
-	}
+  .blogpost-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+  }
+  
+  .blogpost-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+  
+  .blogpost-link {
+    text-decoration: none;
+    display: block;
+  }
+  
+  .blogpost-title {
+    color: #1e293b;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 0.8rem;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+  
+  .blogpost-card:hover .blogpost-title {
+    color: #8b5cf6;
+  }
+  
+  .read-more {
+    color: #8b5cf6;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+  
+  .blogpost-card:hover .read-more {
+    transform: translateX(4px);
+  }
 </style>
