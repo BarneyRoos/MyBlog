@@ -5,17 +5,19 @@ import ThemeIcon from './ThemeIcon.astro';
 ---
 <header>
  <nav>
-  <div>
-    <ThemeIcon />
-    <Menu />
-  </div>
+  <span>
+    缪培康
+  </span>
   <Navigation />
+  <ThemeIcon />
+  <Menu />
  </nav>
 </header>
 
 <style>
- div {
+ nav {
    display: flex;
    justify-content: space-between;
+   align-items: center;
  }
 </style>
