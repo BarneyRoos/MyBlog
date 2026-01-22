@@ -6,64 +6,66 @@ const { frontmatter, headings } = Astro.props;
 ---
 <meta charset="utf-8" />
 <BaseLayout >
-  <div class="relative max-w-[1400px] mx-auto p-8 md:p-4">
-    <!-- 文档大纲（目录） -->
-    <aside class="toc-sidebar fixed left-[max(2rem,calc((100vw-1400px)/2))] top-24 w-60 max-h-[calc(100vh-8rem)] overflow-y-auto xl:hidden scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent hover:scrollbar-thumb-gray-400 dark:hover:scrollbar-thumb-gray-600">
-      <div class="bg-transparent">
-        <h3 class="text-sm font-semibold mb-4 text-gray-600 dark:text-gray-400 pb-2 border-b border-gray-200 dark:border-gray-700">📖 目录</h3>
-        <nav>
-          {headings && headings.length > 0 ? (
-            <ul class="list-none p-0 m-0">
-              {headings.map((heading: any) => (
-                <li class={`my-1 ${
-                  heading.depth === 1 ? '' :
-                  heading.depth === 2 ? 'pl-5' :
-                  heading.depth === 3 ? 'pl-8' :
-                  heading.depth === 4 ? 'pl-11' :
-                  'pl-14'
-                }`}>
-                  <a 
-                    href={`#${heading.slug}`} 
-                    class={`toc-link block py-1.5 px-3 rounded-md transition-all duration-150 text-sm leading-tight border-l-2 border-transparent no-underline
-                      ${heading.depth === 1 ? 'font-medium text-gray-800 dark:text-gray-200' : 'text-gray-600 dark:text-gray-400'}
-                      ${heading.depth >= 3 ? 'text-[13px]' : ''}
-                      ${heading.depth >= 5 ? 'text-xs opacity-70' : ''}
-                      hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-l-blue-600 dark:hover:border-l-blue-400
-                    `}
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p class="text-gray-500 dark:text-gray-500 text-sm my-8">暂无目录</p>
-          )}
-        </nav>
-      </div>
-    </aside>
+  <div class="max-w-[1400px] mx-auto px-8 py-8 md:px-4">
+    <div class="flex gap-8 items-start">
+      <!-- 主要内容区 -->
+      <article class="markdown-body flex-1 min-w-0 max-w-[800px]">
+        <h1 class="bg-gradient-to-r from-purple-600 via-violet-600 to-blue-600 bg-clip-text text-transparent">{frontmatter.title}</h1>
+        <p>作者：{frontmatter.author}，发表于：{frontmatter.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        <p><em>{frontmatter.description}</em></p>
+        <div class="flex flex-wrap">
+          {frontmatter.tags.map((tag: any) => (
+            <span class="m-1 border border-dotted border-gray-400 rounded-lg px-4 py-2 text-lg bg-blue-50 dark:bg-gray-800">
+                <a href={`/tags/${tag}/`} class="text-blue-700 dark:text-blue-400">{tag}</a>
+            </span>
+          ))}
+        </div>
 
-    <!-- 主要内容区 -->
-    <article class="markdown-body max-w-[80ch] mx-auto">
-      <h1>{frontmatter.title}</h1>
-      <p>作者：{frontmatter.author}，发表于：{frontmatter.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-      <p><em>{frontmatter.description}</em></p>
-      <div class="flex flex-wrap">
-        {frontmatter.tags.map((tag: any) => (
-          <span class="m-1 border border-dotted border-gray-400 rounded-lg px-4 py-2 text-lg bg-blue-50 dark:bg-gray-800">
-              <a href={`/tags/${tag}/`} class="text-blue-700 dark:text-blue-400">{tag}</a>
-          </span>
-        ))}
-      </div>
+        <img src={frontmatter.image.url}  alt={frontmatter.image.alt} />
+        <slot />
+      </article>
 
-      <img src={frontmatter.image.url}  alt={frontmatter.image.alt} />
-      <slot />
-    </article>
+      <!-- 文档大纲（目录）- 右侧 -->
+      <aside class="toc-sidebar hidden xl:block sticky top-24 w-64 shrink-0 max-h-[calc(100vh-8rem)] overflow-y-auto">
+        <div class="bg-transparent">
+          <h3 class="text-sm font-semibold mb-4 text-gray-600 dark:text-gray-400 pb-2 border-b border-gray-200 dark:border-gray-700">📖 目录</h3>
+          <nav>
+            {headings && headings.length > 0 ? (
+              <ul class="list-none p-0 m-0">
+                {headings.map((heading: any) => (
+                  <li class={`my-1 ${
+                    heading.depth === 1 ? '' :
+                    heading.depth === 2 ? 'pl-5' :
+                    heading.depth === 3 ? 'pl-8' :
+                    heading.depth === 4 ? 'pl-11' :
+                    'pl-14'
+                  }`}>
+                    <a 
+                      href={`#${heading.slug}`} 
+                      class={`toc-link block py-1.5 px-3 rounded-md transition-all duration-150 text-sm leading-tight border-l-2 border-transparent no-underline
+                        ${heading.depth === 1 ? 'font-medium text-gray-800 dark:text-gray-200' : 'text-gray-600 dark:text-gray-400'}
+                        ${heading.depth >= 3 ? 'text-[13px]' : ''}
+                        ${heading.depth >= 5 ? 'text-xs opacity-70' : ''}
+                        hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-400 hover:border-l-blue-600 dark:hover:border-l-blue-400
+                      `}
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-gray-500 dark:text-gray-500 text-sm my-8">暂无目录</p>
+            )}
+          </nav>
+        </div>
+      </aside>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  /* 自定义滚动条（Tailwind 插件不支持的部分） */
+  /* 自定义滚动条 */
   .toc-sidebar::-webkit-scrollbar {
     width: 4px;
   }
@@ -88,13 +90,6 @@ const { frontmatter, headings } = Astro.props;
 
     .toc-sidebar::-webkit-scrollbar-thumb:hover {
       background: #484f58;
-    }
-  }
-
-  /* 响应式隐藏 */
-  @media (min-width: 1280px) {
-    .toc-sidebar {
-      display: block;
     }
   }
 </style>
