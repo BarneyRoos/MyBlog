@@ -1,15 +1,16 @@
 ---
 import BlogPost from '../components/BlogPost.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
+import { getCollection } from "astro:content";
 // 导入指定目录下的所有 Markdown 文件，立即加载，不是懒加载
-const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+// const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
+const allPosts = await getCollection("blog");
 ---
 <html lang="en">
 	<body>
 		<BaseLayout pageTitle={'我的博客'}>
 			<ul style="padding: 0">
-				{allPosts.map((post: any) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
+				{allPosts.map((post: any) => <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />)}
 			</ul>
 		</BaseLayout>
 	</body>

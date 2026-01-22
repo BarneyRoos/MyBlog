@@ -8,7 +8,7 @@ const { frontmatter } = Astro.props;
 <BaseLayout >
   <div class="markdown-body">
     <h1>{frontmatter.title}</h1>
-    <p>作者：{frontmatter.author}，发表于：{frontmatter.pubDate.toString().slice(0,10)}</p>
+    <p>作者：{frontmatter.author}，发表于：{frontmatter.pubDate.toLocaleString()}</p>
     <p><em>{frontmatter.description}</em></p>
     <div class="tags">
       {frontmatter.tags.map((tag: any) => (

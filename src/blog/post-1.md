@@ -1,8 +1,7 @@
 ---
 title: "内容网站神器：Astro"
-pubDate: 2026-01-21
+pubDate: 2026-01-21T21:30:00+08:00
 description: "快速搭建内容驱动型网站"
-layout: ../../layouts/MdPostLayout.astro
 author: "海川"
 image:
   url: "https://docs.astro.build/assets/rose.webp"
@@ -52,19 +51,6 @@ Astro使我们可以用Markdown编写内容，并使用CSS和JS来美化页面�
 - 读取本地文章：`Object.values(import.meta.glob('./posts/*.md', { eager: true }))`
 - 动态路由：需要向外界导出`getStaticPaths`方法，该方法返回一个支持的路由配置数组，数组的每一项中都包含params和props
 
-```js
-export async function getStaticPaths() {
-  const allPosts = Object.values(
-    import.meta.glob("../posts/*.md", { eager: true }),
-  );
+## 交互：Preact
 
-  return [
-    { params: { tag: "astro" }, props: { posts: allPosts } },
-    { params: { tag: "successes" }, props: { posts: allPosts } },
-    { params: { tag: "community" }, props: { posts: allPosts } },
-    { params: { tag: "blogging" }, props: { posts: allPosts } },
-    { params: { tag: "setbacks" }, props: { posts: allPosts } },
-    { params: { tag: "learning in public" }, props: { posts: allPosts } },
-  ];
-}
-```
+- 如果不添加`client:`指令，将会只渲染静态内容
