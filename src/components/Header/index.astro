@@ -4,15 +4,32 @@ import Navigation from '../Navigation.astro';
 import ThemeIcon from '../ThemeIcon.astro';
 
 ---
-<header class="sticky top-0 z-[100] bg-white/60 backdrop-blur-[12px] shadow-sm py-4">
-  <div class="max-w-[70rem] mx-auto px-8 flex justify-between items-center">
-    <a href="/" class="site-title text-[1.6rem] font-medium no-underline bg-gradient-to-br from-[#667eea] to-[#764ba2] bg-clip-text text-transparent transition-all duration-300 ease-in-out -tracking-[0.02em] relative hover:scale-105 hover:brightness-125">缪培康</a>
-    <div class="flex items-center gap-8 md:gap-8 max-md:gap-4">
+<header class="sticky top-0 z-[100] bg-white/60 dark:bg-slate-900/60 backdrop-blur-[12px] shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- 左侧：Logo/标题 -->
+    <a href="/" class="site-title text-2xl font-medium no-underline bg-gradient-to-br from-[#667eea] to-[#764ba2] bg-clip-text text-transparent transition-all duration-300 ease-in-out -tracking-[0.02em] hover:scale-105 hover:brightness-125 flex-shrink-0">缪培康</a>
+    
+    <!-- 中间：导航（桌面版显示） -->
+    <nav class="hidden lg:block flex-1 ml-12">
       <Navigation />
-      <div class="flex items-center gap-4">
-        <ThemeIcon />
-        <Menu />
-      </div>
+    </nav>
+    
+    <!-- 右侧：功能按钮 -->
+    <div class="flex items-center gap-4 lg:gap-6">
+      <button class="hidden md:inline-flex p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors" aria-label="搜索">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </button>
+      
+      <button class="hidden md:inline-flex p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors" aria-label="声音">
+        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss-icon lucide-rss"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+      </button>
+      
+      <ThemeIcon />
+      <Menu />
     </div>
   </div>
 </header>

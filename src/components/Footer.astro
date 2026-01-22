@@ -1,65 +1,87 @@
 ---
-import Social from "./Social.astro";
 ---
 
-<footer class="footer-wrapper">
-  <div class="wave-decoration">
-    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#bae6fd"></path>
-    </svg>
-  </div>
-  <div class="footer-content">
-    <div class="footer-container">
-      <div class="footer-social">
-        <Social platform="twitter" username="barneyroos" />
-        <Social platform="github" username="barneyroos" />
-        <Social platform="youtube" username="barneyroos" />
+<footer class="relative mt-20 pt-0">
+  <!-- 波浪背景 -->
+  <svg viewBox="0 0 1200 300" preserveAspectRatio="none" class="absolute top-0 left-0 w-full h-auto" style="height: 280px;">
+    <defs>
+      <linearGradient id="footer-wave-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color:#7dd3fc;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    
+    <!-- 大波浪曲线 -->
+    <path d="M0,80 C200,20 400,120 600,60 C800,0 1000,140 1200,80 L1200,0 L0,0 Z" fill="url(#footer-wave-gradient)" opacity="0.3"></path>
+    <path d="M0,120 C150,60 300,180 450,110 C600,50 750,170 900,120 C1050,80 1150,150 1200,120 L1200,80 C1000,140 800,0 600,60 C400,120 200,20 0,80 Z" fill="url(#footer-wave-gradient)" opacity="0.5"></path>
+    <path d="M0,160 C100,100 200,220 300,150 C450,60 600,200 750,140 C900,90 1050,180 1200,160 L1200,120 C1150,150 1050,80 900,120 C750,170 600,50 450,110 C300,180 150,60 0,120 Z" fill="url(#footer-wave-gradient)"></path>
+  </svg>
+  
+  <!-- Footer 内容区域 -->
+  <div class="relative z-10 bg-gradient-to-b from-sky-200 to-blue-400 dark:from-slate-700 dark:to-slate-900 pt-32 pb-12 md:pb-16">
+    <div class="max-w-[70rem] mx-auto px-6 md:px-8">
+      <!-- 主内容网格 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <!-- 左侧：邮箱订阅 -->
+        <div class="lg:col-span-2">
+          <h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3">订阅通讯</h3>
+          <p class="text-slate-700 dark:text-slate-300 text-sm mb-4">想要了解最新的内容发布？输入你的邮箱加入我的免费通讯：</p>
+          <div class="flex gap-2">
+            <input 
+              type="email" 
+              placeholder="your@email.com" 
+              class="flex-1 px-4 py-2 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button class="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold rounded-lg hover:opacity-80 transition-opacity">
+              →
+            </button>
+          </div>
+        </div>
+        
+        <!-- 分类导航 -->
+        <div>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">分类</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">CSS</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">JavaScript</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">React</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Astro</a></li>
+          </ul>
+        </div>
+        
+        <!-- 通用导航 -->
+        <div>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">通用</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/about" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">关于</a></li>
+            <li><a href="/blog" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">博客</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">联系</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">RSS</a></li>
+          </ul>
+        </div>
       </div>
-      <p class="footer-text">© 2026 缪培康的全栈之旅</p>
+      
+      <!-- 底部分割线与版权 -->
+      <div class="border-t border-sky-300 dark:border-slate-600 pt-8">
+        <p class="text-xs text-slate-600 dark:text-slate-400 text-center">
+          © 2018-present 缪培康. All Rights Reserved. 
+          <a href="#" class="underline hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Use</a> · 
+          <a href="#" class="underline hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a> · 
+          <a href="#" class="underline hover:text-slate-900 dark:hover:text-white transition-colors">Code of Conduct</a>
+        </p>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer-wrapper {
-    margin-top: 4rem;
-    position: relative;
-  }
-  
-  .wave-decoration {
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-  }
-  
-  .wave-decoration svg {
-    width: 100%;
-    height: 60px;
-    display: block;
-  }
-  
-  .footer-content {
-    background: linear-gradient(180deg, #bae6fd 0%, #7dd3fc 100%);
-    padding: 2rem 0 3rem;
-  }
-  
-  .footer-container {
-    max-width: 70rem;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
-  }
-  
-  .footer-social {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .footer-text {
-    color: #0c4a6e;
-    font-size: 0.9rem;
-    margin: 0;
+  /* SVG 波浪可选动画 */
+  @keyframes wave-float {
+    0%, 100% {
+      d: path("M0,80 C200,20 400,120 600,60 C800,0 1000,140 1200,80 L1200,0 L0,0 Z");
+    }
+    50% {
+      d: path("M0,90 C200,30 400,130 600,70 C800,10 1000,150 1200,90 L1200,0 L0,0 Z");
+    }
   }
 </style>
