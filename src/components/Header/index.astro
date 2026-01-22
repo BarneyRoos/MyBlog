@@ -2,13 +2,14 @@
 import Menu from '../Menu.astro';
 import Navigation from '../Navigation.astro';
 import ThemeIcon from '../ThemeIcon.astro';
+
 ---
-<header class="header-wrapper">
-  <div class="header-container">
-    <a href="/" class="site-title">缪培康</a>
-    <div class="nav-group">
+<header class="sticky top-0 z-[100] bg-white/60 backdrop-blur-[12px] shadow-sm py-4">
+  <div class="max-w-[70rem] mx-auto px-8 flex justify-between items-center">
+    <a href="/" class="site-title text-[1.6rem] font-medium no-underline bg-gradient-to-br from-[#667eea] to-[#764ba2] bg-clip-text text-transparent transition-all duration-300 ease-in-out -tracking-[0.02em] relative hover:scale-105 hover:brightness-125">缪培康</a>
+    <div class="flex items-center gap-8 md:gap-8 max-md:gap-4">
       <Navigation />
-      <div class="header-actions">
+      <div class="flex items-center gap-4">
         <ThemeIcon />
         <Menu />
       </div>
@@ -25,59 +26,7 @@ import ThemeIcon from '../ThemeIcon.astro';
   font-display: swap;
 }
 
-.header-wrapper {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1px 3px rgba(177, 177, 177, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1rem 0;
-}
-
-.header-container {
-  max-width: 70rem;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .site-title {
-  font-size: 1.6rem;
-  font-weight: 500;
-  text-decoration: none;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transition: all 0.3s ease;
-  letter-spacing: -0.02em;
-  position: relative;
   font-family: 'ZCOOL KuaiLe', cursive;
-}
-
-.site-title:hover {
-  transform: scale(1.05);
-  filter: brightness(1.2);
-}
-
-.nav-group {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-@media (max-width: 768px) {
-  .nav-group {
-    gap: 1rem;
-  }
 }
 </style>

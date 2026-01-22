@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
 html {
   background-color: #fdfeff;
   font-family: sans-serif;
@@ -18,98 +21,21 @@ h1 {
   font-size: 2.5rem;
 }
 
-/* 导航样式 */
+/* 菜单按钮样式 */
 .menu {
-  background-color: #334155;
-  border: none;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
+  @apply bg-slate-700 border-none text-white text-base font-semibold px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-slate-600 hover:scale-105 md:hidden;
 }
 
-.menu:hover {
-  background-color: #475569;
-  transform: scale(1.05);
-}
-
-.nav-links {
-  width: 100%;
-  display: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  display: block;
-  text-align: center;
-  padding: 12px 0;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #334155;
-  transition: all 0.2s;
-}
-
-.nav-links a:hover,
-.nav-links a:focus {
-  background-color: #fecdd3;
-  color: #be123c;
-}
-
+/* 导航菜单展开状态 */
 :has(.menu[aria-expanded="true"]) .nav-links {
-  display: unset;
-}
-
-@media screen and (min-width: 768px) {
-  .nav-links {
-    margin-left: 2em;
-    display: flex;
-    gap: 0.5em;
-    position: static;
-    width: auto;
-    background: none;
-  }
-
-  .nav-links a {
-    display: inline-block;
-    padding: 10px 18px;
-    border-radius: 8px;
-  }
-
-  .menu {
-    display: none;
-  }
+  @apply block;
 }
 
 /* 黑暗主题 */
 html.dark {
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-  color: #f1f5f9;
+  @apply bg-gradient-to-b from-slate-950 via-slate-900 to-slate-800 text-slate-100;
 }
 
 .dark .menu {
-  background-color: #f1f5f9;
-  color: #0f172a;
-}
-
-.dark .nav-links a:hover,
-.dark .nav-links a:focus {
-  background-color: #334155;
-  color: #fbbf24;
-}
-
-.dark .nav-links a {
-  color: #f1f5f9;
-}
-
-.dark a {
-  color: #fbbf24;
-}
-
-.dark h1 {
-  color: #f1f5f9;
+  @apply bg-slate-100 text-slate-900 hover:bg-slate-200;
 }
