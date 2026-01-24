@@ -1,12 +1,12 @@
 ---
-title: "HTML5"
+title: "HTML"
 pubDate: 2026-01-22
-description: "俯瞰HTML5"
+description: "HTML重要概念复习"
 author: "海川"
 image:
   url: ""
   alt: ""
-tags: ["HTML5"]
+tags: ["HTML"]
 ---
 
 ## 一、HTML5 基础概念

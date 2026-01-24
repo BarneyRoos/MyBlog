@@ -143,11 +143,14 @@
 
 /* ========== 链接样式 ========== */
 .markdown-body a {
-  color: #5a8fb8;
+  color: #5a8fb8; /* #5a8fb8 */
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: all 0.25s ease;
   font-weight: 500;
+}
+.markdown-body a::after {
+  content: "🌐";
 }
 
 .markdown-body a:hover {
@@ -157,7 +160,7 @@
 }
 
 .markdown-body a:visited {
-  color: #8b7d9e;
+  color: unset;
 }
 
 /* ========== 代码样式 ========== */
@@ -290,7 +293,7 @@
 }
 
 .markdown-body tr:hover {
-  background: #f4e8e0;
+  background: #fffef0;
   transition: background 0.2s ease;
 }
 
