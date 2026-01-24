@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProfileHeader from './ProfileHeader.astro';
+import ProfessionalSummary from './ProfessionalSummary.astro';
+import SkillsList from './SkillsList.astro';
+import ProjectList from './ProjectList.astro';
+import WorkExperienceTimeline from './WorkExperienceTimeline.astro';
+import CallToAction from './CallToAction.astro';
+import { profile, skills, projects, workExperience } from './data';
+
+const pageTitle = `关于`;
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="space-y-12">
+    <!-- 个人头部信息 -->
+    <ProfileHeader profile={profile} />
+
+    <!-- 职业概述 -->
+    <ProfessionalSummary experience={profile.experience} />
+
+    <!-- 技能清单 -->
+    <SkillsList skills={skills} />
+
+    <!-- 代表项目 -->
+    <ProjectList projects={projects} />
+
+    <!-- 工作经历 -->
+    <WorkExperienceTimeline workExperience={workExperience} />
+
+    <!-- 底部CTA -->
+    <CallToAction email={profile.email} phone={profile.phone} />
+  </div>
+</BaseLayout>

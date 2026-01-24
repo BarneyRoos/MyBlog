@@ -1,0 +1,43 @@
+---
+interface Job {
+  company: string;
+  period: string;
+  role: string;
+  description: string;
+}
+
+interface Props {
+  workExperience: Job[];
+}
+
+const { workExperience } = Astro.props;
+---
+
+<div class="space-y-6">
+  <h2 class="text-3xl font-bold text-gray-800">工作经历</h2>
+  
+  <div class="space-y-4">
+    {workExperience.map((job) => (
+      <div class="relative">
+        <!-- 时间线 -->
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-500"></div>
+        
+        <!-- 卡片 -->
+        <div class="ml-6 p-6 rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 hover:shadow-md transition-all">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+            <div>
+              <h3 class="text-xl font-bold text-gray-800">{job.company}</h3>
+              <p class="text-blue-600 font-semibold">{job.role}</p>
+            </div>
+            <span class="text-sm font-semibold text-gray-500 md:text-right">
+              {job.period}
+            </span>
+          </div>
+          <p class="text-gray-700">
+            {job.description}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

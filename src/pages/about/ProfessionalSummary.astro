@@ -1,0 +1,17 @@
+---
+interface Props {
+  experience: string;
+}
+
+const { experience } = Astro.props;
+---
+
+<div class="space-y-4">
+  <h2 class="text-3xl font-bold text-gray-800">职业概述</h2>
+  <div class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+    <p class="text-gray-700 leading-relaxed">
+      {experience}，擅长使用 React + TypeScript 进行Web应用开发，具备良好的组件化设计能力与用户体验意识。熟悉现代前端框架，了解后端技术，可独立完成完整业务模块交付。重视代码质量，具备良好的项目管理和协作能力，曾主导多个平台型系统的设计与实现。
+    </p>
+    <p class="text-blue-600 font-semibold mt-4">🎯 目标岗位：前端开发，React/Next.js 方向</p>
+  </div>
+</div>
