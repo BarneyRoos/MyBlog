@@ -151,6 +151,7 @@
 }
 .markdown-body a::after {
   content: "🌐";
+  zoom: 0.8;
 }
 
 .markdown-body a:hover {
