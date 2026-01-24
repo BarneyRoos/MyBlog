@@ -6,7 +6,7 @@ export const profile = {
   education: "福州大学 · 电子信息工程 · 2016年毕业",
   email: "paykan.miao@gmail.com",
   phone: "19993171541",
-  blog: "https://full-stack-journey.netlify.app/",
+  blog: "https://haichuan.netlify.app/",
 };
 
 export const skills = {
