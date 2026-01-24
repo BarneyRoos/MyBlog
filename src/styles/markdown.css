@@ -15,7 +15,7 @@
     sans-serif;
 
   color: #2c3e50;
-  background: #fafbfc;
+  background: #fffcf8;
   line-height: 1.85;
   font-size: 1.0625rem;
   padding: 3.5rem 3rem;
@@ -281,7 +281,6 @@
   background: linear-gradient(180deg, #f4e8e0 0%, #ece3d8 100%);
   font-weight: 700;
   color: #4a6fa5;
-  text-transform: uppercase;
   font-size: 0.9em;
   letter-spacing: 0.6px;
 }

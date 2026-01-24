@@ -19,24 +19,21 @@ tags: ["HTML"]
 ### 2. 什么是 HTML5？
 
 - HTML5是HTML标准的最新版本
-- 引入了语义化标签、丰富的表单控件、多媒体支持、离线存储、Canvas绘画等新特性
+- 引入了语义化标签、丰富的表单控件、多媒体支持、离线存储、Canvas绘画、新的浏览器API等新特性
 
 ### 3. 什么是H5？
 
 通常是HTML5的简称，有时也泛指基于HTML5开发的**移动端**网页或Web应用。
 
-### 3. DOCTYPE 声明
+### 4. DOCTYPE 声明
 
-```html
-<!DOCTYPE html>
-```
+- 文档类型声明，也就是当前文档采用哪种HTML标准，必须写在第一行
+- 确保网页在各浏览器中显示一致
+- HTML5中统一使用`<!DOCTYPE html>`（不区分大小写），让浏览器以**标准模式**渲染
 
-- HTML5统一使用 `<!DOCTYPE html>`
-- 不区分大小写，写 `<!doctype html>` 也可以
+## 二、语义化标签
 
-## 二、语义化标签（重要面试题）
-
-### 核心语义标签
+### 1. 核心语义标签
 
 | 标签        | 用途          | 场景               |
 | ----------- | ------------- | ------------------ |
@@ -48,129 +45,50 @@ tags: ["HTML"]
 | `<aside>`   | 侧边栏        | 相关链接、广告     |
 | `<footer>`  | 页脚          | 版权、联系方式     |
 
-### 为什么使用语义标签？
+### 2. 为什么使用语义标签？
+
+可读性、SEO、无障碍、爬虫
 
 - ✅ 提高代码可读性和可维护性
 - ✅ 有利于SEO优化
 - ✅ 提升无障碍可访问性（Accessibility）
 - ✅ 便于搜索引擎爬虫理解页面结构
 
-### 区别：section vs article vs div
+### 3. section、article、div的区别
 
-```html
-<!-- article: 独立的、完整的内容块（如博文） -->
-<article>
-  <h2>我的第一篇博客</h2>
-  <p>内容...</p>
-</article>
-
-<!-- section: 相关内容的组织（如章节） -->
-<section>
-  <h2>第一章</h2>
-  <p>内容...</p>
-</section>
-
-<!-- div: 无语义的通用容器 -->
-<div class="wrapper">内容</div>
-```
+- section：划分页面逻辑结构，比如产品、合作伙伴、新闻
+- article：表示一段完整、独立的内容块，比如一篇文章
+- div：无意义容器，用于布局或样式
 
 ## 三、多媒体标签
 
-### 音频标签 `<audio>`
-
-```html
-<audio controls width="300">
-  <source src="music.mp3" type="audio/mpeg" />
-  <source src="music.ogg" type="audio/ogg" />
-  您的浏览器不支持音频播放
-</audio>
-```
-
-**常用属性：**
-
-- `controls` - 显示播放控件
-- `autoplay` - 自动播放（某些浏览器限制）
-- `loop` - 循环播放
-- `muted` - 静音
-- `preload` - 预加载（none/metadata/auto）
-
-### 视频标签 `<video>`
-
-```html
-<video controls width="640" height="360" poster="poster.jpg">
-  <source src="video.mp4" type="video/mp4" />
-  <source src="video.webm" type="video/webm" />
-  您的浏览器不支持视频播放
-</video>
-```
-
-**常用属性：**
-
-- `controls` - 显示控制条
-- `autoplay` - 自动播放
-- `muted` - 静音播放（autoplay结合使用）
-- `loop` - 循环播放
-- `poster` - 视频封面
-- `preload` - 预加载模式
-
-**面试要点：** 为什么需要 `<source>` 多标签？
-
-- 不同浏览器支持不同格式，提供多个格式确保兼容性
+- video、audio
+- 为什么使用多个source标签：提供多个格式，兼容各种浏览器
 
 ## 四、表单增强
 
-### 新增 input 类型
+### 1. 新增 input 类型
 
-```html
-<!-- 邮箱验证 -->
-<input type="email" placeholder="请输入邮箱" />
+- email：自动校验格式，移动端弹出邮箱快捷输入
+- tel：电话号码，移动端弹出数字键盘
+- url：自动校验格式
+- number：可设置最大最小值、步长
+- color：弹出颜色选择器
+- date：弹出日期选择器
+- time：弹出时间选择器
+- datetime-local：选择本地日期和时间
+- range：滑块选择范围值
+- search：搜索框
 
-<!-- 电话号码 -->
-<input type="tel" placeholder="请输入电话" />
+### 2. 控件属性增强
 
-<!-- URL验证 -->
-<input type="url" placeholder="请输入网址" />
+- placeholder: 占位符提示
+- required: 必填验证
+- pattern: 正则验证——`<input type="text" pattern="[0-9]{6}" title="请输入6位数字" />`
+- novalidate: 禁用浏览器验证——`<form novalidate>`
+- autofocus: 自动获得焦点——`<input type="text" autofocus />`
 
-<!-- 数字输入 -->
-<input type="number" min="0" max="100" />
-
-<!-- 颜色选择器 -->
-<input type="color" />
-
-<!-- 日期选择 -->
-<input type="date" />
-<input type="time" />
-<input type="datetime-local" />
-
-<!-- 范围滑块 -->
-<input type="range" min="0" max="100" />
-
-<!-- 搜索框 -->
-<input type="search" placeholder="搜索..." />
-```
-
-### 表单属性增强
-
-```html
-<!-- placeholder: 占位符提示 -->
-<input type="text" placeholder="输入用户名" />
-
-<!-- required: 必填验证 -->
-<input type="text" required />
-
-<!-- pattern: 正则验证 -->
-<input type="text" pattern="[0-9]{6}" title="请输入6位数字" />
-
-<!-- novalidate: 禁用浏览器验证 -->
-<form novalidate>
-  <input type="email" />
-</form>
-
-<!-- autofocus: 自动获得焦点 -->
-<input type="text" autofocus />
-```
-
-### datalist - 预定义选项列表
+### 3. datalist - 预定义选项列表
 
 ```html
 <input type="text" list="browsers" />
@@ -181,52 +99,23 @@ tags: ["HTML"]
 </datalist>
 ```
 
-## 五、Canvas 绘画
+## 五、Canvas & SVG
 
-### 基础使用
+- canvas：画布标签，可用JS绘制各种图形，适合动画、游戏、图表等高性能场景
+- SVG：Scalable Vector Graphics，可缩放矢量图形，基于XML。适合图标、插画、图表等，任意缩放不会失真，支持事件绑定。
 
-```html
-<canvas id="myCanvas" width="400" height="300"></canvas>
-
-<script>
-  const canvas = document.getElementById("myCanvas");
-  const ctx = canvas.getContext("2d");
-
-  // 绘制矩形
-  ctx.fillStyle = "red";
-  ctx.fillRect(10, 10, 100, 50);
-
-  // 绘制圆形
-  ctx.fillStyle = "blue";
-  ctx.beginPath();
-  ctx.arc(200, 150, 50, 0, Math.PI * 2);
-  ctx.fill();
-
-  // 绘制线条
-  ctx.strokeStyle = "black";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(400, 300);
-  ctx.stroke();
-</script>
-```
-
-### Canvas vs SVG
-
-| 特性     | Canvas           | SVG                |
-| -------- | ---------------- | ------------------ |
-| 绘制方式 | 栅格（像素）     | 矢量               |
-| 放大效果 | 会失真           | 清晰无失真         |
-| 事件     | 不支持元素事件   | 支持DOM事件        |
-| 性能     | 大数据量优势     | 元素较多时较慢     |
-| 用途     | 动画、游戏、图表 | 图标、线条图、演示 |
-
-**面试要点：** Canvas绘制的内容不能被搜索引擎索引，需要提供文本备选方案
+| 特性     | Canvas             | SVG                |
+| -------- | ------------------ | ------------------ |
+| 绘制方式 | 栅格（像素）       | 矢量               |
+| 放大效果 | 会失真             | 清晰无失真         |
+| 事件     | 不支持元素事件     | 支持DOM事件        |
+| 性能     | 大数据量优势       | 元素较多时较慢     |
+| 可访问性 | 不能被搜索引擎索引 | 可以               |
+| 用途     | 动画、游戏、图表   | 图标、线条图、演示 |
 
 ## 六、数据存储
 
-### 1. localStorage（关键面试题）
+### 1. localStorage
 
 ```javascript
 // 保存数据
@@ -266,25 +155,30 @@ const token = sessionStorage.getItem("token");
 
 ### 3. IndexedDB（大数据存储）
 
+IndexDB是HTML5提供的浏览器本地数据库，用于存储大量结构化数据。
+
+- 容量大：支持GB级别，远超localStorage
+- 结构化存储：支持对象、数组等，支持索引和查询
+- 异步：所有操作均为异步，不阻塞主线程
+
 ```javascript
+// 打开名为"MyDB"的数据库，版本号为1
 const request = indexedDB.open("MyDB", 1);
 
+// 数据库打开成功后触发
 request.onsuccess = (event) => {
+  // 获取数据库实例
   const db = event.target.result;
+  // 创建一个读写事务，操作名为"users"的对象仓库
   const transaction = db.transaction(["users"], "readwrite");
+  // 获取对象仓库
   const store = transaction.objectStore("users");
+  // 向对象仓库中添加一条数据
   store.add({ id: 1, name: "Alice" });
 };
 ```
 
-**特点：**
-
-- 支持大容量（GB级别）
-- 支持复杂查询
-- 异步操作
-- 支持事务
-
-### localStorage vs sessionStorage vs IndexedDB
+### 4. localStorage & sessionStorage & IndexedDB
 
 | 特性     | localStorage | sessionStorage | IndexedDB |
 | -------- | ------------ | -------------- | --------- |
@@ -295,7 +189,13 @@ request.onsuccess = (event) => {
 
 ## 七、Geolocation API
 
-### 获取用户位置
+Geolocation API是HTML5提供的用于获取用户地理位置信息的浏览器接口。
+
+- 通过`navigator.geolocation`对象调用，常用：`getCurrentPosition`、`watchPosition`
+- 需要用户授权
+- 可获取经纬度、高度、速度，常用语地图、定位、打卡等
+
+### 1. 获取用户位置
 
 ```javascript
 if (navigator.geolocation) {
@@ -312,14 +212,15 @@ if (navigator.geolocation) {
 }
 ```
 
-**面试要点：**
-
-- 需要用户授权
-- 隐私敏感，需谨慎使用
-
 ## 八、Web Workers（多线程）
 
-### 主线程
+Web Workers是HTML5提供的一种在浏览器后台运行JavaScript的机制，可以让耗时计算在独立线程中执行，不会阻塞主线程，从而提升页面响应速度。
+
+- 通过`new Worker("xx.js")`创建，主线程和Worker通过`postMessage`进行通信。
+- 适用于大数据处理、复杂计算、文件解析等
+- Worker不能直接操作DOM
+
+### 1. 主线程
 
 ```javascript
 // main.js
@@ -334,7 +235,7 @@ worker.onmessage = (event) => {
 };
 ```
 
-### Worker线程
+### 2. Worker线程
 
 ```javascript
 // worker.js
@@ -342,55 +243,26 @@ onmessage = (event) => {
   const result = expensiveCalculation(event.data.num);
   postMessage(result);
 };
-
-function expensiveCalculation(n) {
-  let sum = 0;
-  for (let i = 0; i < n; i++) {
-    sum += i;
-  }
-  return sum;
-}
 ```
-
-**优势：**
-
-- 不阻塞主线程
-- 适合耗时计算
-- 提升用户体验
 
 ## 九、属性和事件
 
-### 常用属性
+### 1. 自定义属性：data-\*
 
-```html
-<!-- data-* 自定义属性 -->
-<div data-id="123" data-category="product">内容</div>
+- 用于在标签上存储数据，如`data-id="123"`
+- 设置：`<div data-id="123"></div>`
+- 读取：`element.dataset.id`
+- 可以避免滥用class、id
 
-<script>
-  const div = document.querySelector("div");
-  console.log(div.dataset.id); // '123'
-  console.log(div.dataset.category); // 'product'
-</script>
-```
+### 2. 常用事件
 
-### 常用事件
+- DOMContentLoaded：DOM加载完成
+- beforeunload：页面即将关闭
+- online：网络已连接
+- offline：网络断开
+- orientationchange：屏幕方向改变
 
 ```javascript
-// 页面加载完成
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM加载完成");
-});
-
-// 页面卸载
-window.addEventListener("beforeunload", () => {
-  console.log("页面即将关闭");
-});
-
-// 网络连接状态变化
-window.addEventListener("online", () => console.log("网络连接"));
-window.addEventListener("offline", () => console.log("网络断开"));
-
-// 设备方向改变
 window.addEventListener("orientationchange", () => {
   console.log("屏幕方向:", window.orientation);
 });
@@ -399,6 +271,8 @@ window.addEventListener("orientationchange", () => {
 ## 十、其他重要特性
 
 ### 1. Fullscreen API（全屏）
+
+FullScreen API是HTML5提供的让网页元素进入或退出全屏显示的功能。
 
 ```javascript
 const element = document.querySelector("#video");
@@ -409,26 +283,33 @@ document.exitFullscreen();
 
 ### 2. 拖拽 API
 
+Drag and Drop API是HTML5提供的一套让网页元素可以被拖动和放置的接口，常用语文件上传、列表排序、组件拖放等场景。
+
 ```html
+<!-- 可拖拽元素，设置draggable="true"，并监听拖拽开始事件 -->
 <div draggable="true" ondragstart="handleDragStart(event)">拖拽我</div>
 
+<!-- 放置目标区域，监听dragover和drop事件 -->
 <div ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
   放在这里
 </div>
 
 <script>
+  // 拖拽开始时触发，设置拖拽数据
   function handleDragStart(e) {
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", e.target.id);
+    e.dataTransfer.effectAllowed = "move"; // 允许的拖拽效果
+    e.dataTransfer.setData("text/plain", e.target.id); // 存储拖拽数据
   }
 
+  // 拖拽经过目标区域时触发，必须阻止默认事件才能触发drop
   function handleDragOver(e) {
     e.preventDefault();
   }
 
+  // 放下时触发，获取拖拽数据
   function handleDrop(e) {
     e.preventDefault();
-    const id = e.dataTransfer.getData("text/plain");
+    const id = e.dataTransfer.getData("text/plain"); // 读取拖拽数据
     console.log("放下了:", id);
   }
 </script>
@@ -447,90 +328,3 @@ Notification.requestPermission().then((permission) => {
   }
 });
 ```
-
-### 4. Service Worker（离线缓存）
-
-```javascript
-// 在main.js中
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").then((registration) => {
-    console.log("Service Worker注册成功");
-  });
-}
-
-// sw.js
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open("v1").then((cache) => {
-      return cache.addAll(["/", "/index.html", "/styles.css"]);
-    }),
-  );
-});
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    }),
-  );
-});
-```
-
-## 十一、面试常见问题速记
-
-### Q1: 什么是HTML5？与HTML4的主要区别？
-
-**A:** HTML5是最新的HTML标准，引入了语义化标签、多媒体、Canvas、Web Storage、Web Workers等新特性。主要包括新标签（`<header>`、`<article>`等）、多媒体标签（`<audio>`、`<video>`）、表单增强、以及浏览器API扩展。
-
-### Q2: 为什么要使用语义化标签？
-
-**A:** 三大好处：
-
-1. 代码可读性强，易于维护
-2. 利于SEO优化，搜索引擎更好理解页面结构
-3. 提升无障碍访问性，屏幕阅读器能正确解读
-
-### Q3: localStorage和sessionStorage的区别？
-
-**A:**
-
-- **有效期**：localStorage永久存储；sessionStorage在标签页关闭时删除
-- **作用域**：都遵循同源策略
-- **容量**：都是5-10MB
-- **用途**：localStorage存用户偏好、登态；sessionStorage存临时数据
-
-### Q4: Canvas和SVG如何选择？
-
-**A:**
-
-- **Canvas**：适合动画、游戏、频繁变化的内容
-- **SVG**：适合图标、线条图、缩放不失真的场景
-
-### Q5: 如何实现离线访问？
-
-**A:** 使用Service Worker拦截网络请求，结合Cache API缓存资源。用户首次访问时缓存文件，离线时返回缓存版本。
-
-### Q6: 什么是Web Worker？
-
-**A:** 在后台线程执行JavaScript，不阻塞主线程。适用于复杂计算、数据处理。通过`postMessage`与主线程通信。
-
-## 总结
-
-HTML5的学习路径：
-
-1. **基础**：掌握新语义标签的用途
-2. **多媒体**：理解音视频标签和格式兼容性
-3. **表单**：了解新input类型和验证
-4. **API**：Storage、Geolocation、Web Workers等
-5. **高级**：Service Worker、Canvas、离线存储
-
-**面试建议：**
-
-- 理解为什么，不仅是怎样做
-- 准备实际代码示例
-- 了解浏览器兼容性问题
-- 关注性能和用户体验
-
----
-
-祝你面试顺利！💪
