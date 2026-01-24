@@ -1,12 +1,12 @@
 ---
 title: "Flex布局精通"
-pubDate: 2026-01-24
+pubDate: 2026-01-24T15:30:00+08:00
 description: "全面掌握Flex布局"
 author: "海川"
 image:
   url: ""
   alt: ""
-tags: ["Flex"]
+tags: ["Flex布局"]
 ---
 
 ## 一、Flex 基础概念

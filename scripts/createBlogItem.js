@@ -15,7 +15,7 @@ const BLOG_DIR = path.join(__dirname, "../src/blog");
 // 默认前置数据
 const DEFAULT_FRONTMATTER = {
   title: "",
-  pubDate: new Date().toISOString().split("T")[0],
+  pubDate: new Date().toISOString(),
   description: "",
   author: "海川",
   image: {

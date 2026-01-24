@@ -6,12 +6,12 @@ const { frontmatter, headings } = Astro.props;
 ---
 <meta charset="utf-8" />
 <BaseLayout >
-  <div class="max-w-[1400px] mx-auto px-8 md:px-4">
+  <div class="max-w-350 mx-auto px-8 md:px-4">
     <div class="flex gap-8 items-start">
       <!-- 主要内容区 -->
-      <article class="markdown-body flex-1 min-w-0 max-w-[800px]">
-        <h1 class="bg-gradient-to-r from-purple-600 via-violet-600 to-blue-600 bg-clip-text text-transparent">{frontmatter.title}</h1>
-        <p>作者：{frontmatter.author}，发表于：{frontmatter.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      <article class="markdown-body flex-1 min-w-0 max-w-200">
+        <h1 class="bg-linear-to-r from-purple-600 via-violet-600 to-blue-600 bg-clip-text text-transparent">{frontmatter.title}</h1>
+        <p>作者：{frontmatter.author}，发表于：{frontmatter.pubDate.toLocaleTimeString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
         <p><em>{frontmatter.description}</em></p>
         <div class="flex flex-wrap">
           {frontmatter.tags.map((tag: any) => (

@@ -1,6 +1,6 @@
 ---
 title: "内容网站神器：Astro"
-pubDate: 2026-01-21
+pubDate: 2026-01-21T09:30:00+08:00
 description: "快速搭建内容驱动型网站"
 author: "海川"
 image:

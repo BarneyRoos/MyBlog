@@ -5,7 +5,9 @@ import { getCollection } from "astro:content"
 
 const pageTitle = "低维展开 - 前端全栈成长之路"
 const allPosts = await getCollection("blog")
-const recentPosts = allPosts.slice(0, 3) // 最新3篇文章
+const recentPosts = allPosts
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3) // 最新3篇文章
 ---
 
 <BaseLayout pageTitle={pageTitle}>

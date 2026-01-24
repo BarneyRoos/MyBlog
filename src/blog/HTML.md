@@ -1,6 +1,6 @@
 ---
 title: "HTML"
-pubDate: 2026-01-22
+pubDate: 2026-01-22T21:30:00+08:00
 description: "HTML重要概念复习"
 author: "海川"
 image:
