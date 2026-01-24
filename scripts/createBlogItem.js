@@ -15,7 +15,8 @@ const BLOG_DIR = path.join(__dirname, "../src/blog");
 // 默认前置数据
 const DEFAULT_FRONTMATTER = {
   title: "",
-  pubDate: new Date().toISOString(),
+  // 当前日期时间UTC格式，显示在页面中就是正确的本地时间，在MD文件中显示的是UTC字符串，不用理会
+  pubDate: new Date(Date.now()).toISOString(),
   description: "",
   author: "海川",
   image: {

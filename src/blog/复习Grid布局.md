@@ -1,7 +1,7 @@
 ---
-title: "Grid布局精通"
+title: "Grid布局复习"
 pubDate: 2026-01-24T19:40:00+08:00
-description: "深入学习Grid布局"
+description: "深入复习Grid布局"
 author: "海川"
 image:
   url: ""
