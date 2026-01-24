@@ -60,10 +60,67 @@ tags: ["HTML5"]
 - article：表示一段完整、独立的内容块，比如一篇文章
 - div：无意义容器，用于布局或样式
 
+### 4. 更多语义标签
+
+| 标签           | 用途                   | 场景                 |
+| -------------- | ---------------------- | -------------------- |
+| `<figure>`     | 包含插图或其他说明     | 图表、照片、代码示例 |
+| `<figcaption>` | figure的标题或说明文本 | 图表说明、引用来源   |
+| `<time>`       | 时间或日期标记         | 文章发布时间、事件   |
+| `<mark>`       | 高亮或标记文本         | 搜索结果高亮         |
+| `<details>`    | 可折叠的详细信息容器   | FAQ、代码示例        |
+| `<summary>`    | details的标题          | 点击展开/收起        |
+| `<output>`     | 计算结果输出           | 表单计算结果         |
+
 ## 三、多媒体标签
 
-- video、audio
+### 1. video 和 audio 基础
+
+- video、audio是HTML5的原生多媒体标签
 - 为什么使用多个source标签：提供多个格式，兼容各种浏览器
+
+```html
+<video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4" />
+  <source src="movie.ogg" type="video/ogg" />
+  您的浏览器不支持 HTML5 video 标签
+</video>
+```
+
+### 2. 常用方法和属性
+
+| 方法/属性      | 说明                                   |
+| -------------- | -------------------------------------- |
+| `play()`       | 播放                                   |
+| `pause()`      | 暂停                                   |
+| `currentTime`  | 当前播放时间（秒）                     |
+| `duration`     | 总时长（秒）                           |
+| `volume`       | 音量（0-1）                            |
+| `muted`        | 是否静音                               |
+| `playbackRate` | 播放速度（1为正常，0.5为50%，2为200%） |
+
+### 3. 常用事件
+
+- `play`：播放开始
+- `pause`：暂停
+- `playing`：正在播放
+- `ended`：播放结束
+- `timeupdate`：当前播放时间改变
+- `loadstart`：开始加载
+- `progress`：加载中
+- `canplay`：可以开始播放
+
+```javascript
+const video = document.querySelector("video");
+
+video.addEventListener("timeupdate", () => {
+  console.log(`当前时间: ${video.currentTime}秒`);
+});
+
+video.addEventListener("ended", () => {
+  console.log("播放结束");
+});
+```
 
 ## 四、表单增强
 
@@ -326,5 +383,259 @@ Notification.requestPermission().then((permission) => {
       icon: "/icon.png",
     });
   }
+});
+```
+
+## 十一、File API（文件操作）
+
+File API是HTML5提供的用于访问和处理用户文件的接口，常用于文件上传、预览、读取文件内容等场景。
+
+### 1. 获取文件信息
+
+```html
+<input type="file" id="fileInput" />
+```
+
+```javascript
+const fileInput = document.querySelector("#fileInput");
+
+fileInput.addEventListener("change", (event) => {
+  const files = event.target.files; // FileList 对象
+
+  if (files.length > 0) {
+    const file = files[0]; // 获取第一个文件
+    console.log(`文件名: ${file.name}`);
+    console.log(`文件大小: ${file.size} 字节`);
+    console.log(`文件类型: ${file.type}`);
+    console.log(`修改时间: ${new Date(file.lastModified)}`);
+  }
+});
+```
+
+### 2. FileReader 读取文件内容
+
+```javascript
+const fileInput = document.querySelector("#fileInput");
+
+fileInput.addEventListener("change", (event) => {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+
+  // 读取为文本
+  reader.onload = (e) => {
+    console.log("文件内容:", e.target.result);
+  };
+  reader.readAsText(file, "utf-8");
+
+  // 或读取为 Data URL（用于预览图片）
+  reader.onload = (e) => {
+    const img = new Image();
+    img.src = e.target.result;
+    document.body.appendChild(img);
+  };
+  reader.readAsDataURL(file);
+
+  // 或读取为 ArrayBuffer（二进制数据）
+  reader.onload = (e) => {
+    const buffer = e.target.result;
+    console.log("二进制数据:", buffer);
+  };
+  reader.readAsArrayBuffer(file);
+});
+```
+
+### 3. Blob 和 File 的关系
+
+- `File` 是 `Blob` 的子类
+- `Blob` 表示一个不可变的二进制数据块
+- 常用于创建对象URL、发送请求等
+
+```javascript
+// 创建 Blob
+const blob = new Blob(["Hello World"], { type: "text/plain" });
+const url = URL.createObjectURL(blob);
+
+// 上传文件
+const formData = new FormData();
+formData.append("file", file);
+fetch("/upload", { method: "POST", body: formData });
+```
+
+## 十二、Clipboard API（剪贴板操作）
+
+Clipboard API提供了访问系统剪贴板的接口，可以读取和写入文本或图片。
+
+```javascript
+// 复制文本到剪贴板
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log("复制成功");
+  } catch (err) {
+    console.error("复制失败:", err);
+  }
+}
+
+// 从剪贴板读取文本
+async function pasteFromClipboard() {
+  try {
+    const text = await navigator.clipboard.readText();
+    console.log("粘贴的内容:", text);
+  } catch (err) {
+    console.error("读取失败:", err);
+  }
+}
+
+// 复制图片到剪贴板
+async function copyImageToClipboard(blob) {
+  const data = [new ClipboardItem({ [blob.type]: blob })];
+  await navigator.clipboard.write(data);
+}
+```
+
+## 十三、Service Worker 与离线应用
+
+Service Worker是一种特殊的Web Worker，运行在浏览器后台，可以实现离线应用、推送通知、后台同步等功能，是构建PWA的核心技术。
+
+### 1. 注册 Service Worker
+
+```javascript
+// main.js
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((registration) => {
+        console.log("Service Worker 注册成功:", registration);
+      })
+      .catch((error) => {
+        console.log("Service Worker 注册失败:", error);
+      });
+  });
+}
+```
+
+### 2. Service Worker 生命周期
+
+- `install`：安装阶段，常用于缓存资源
+- `activate`：激活阶段，常用于清理旧缓存
+- `fetch`：拦截网络请求，实现缓存策略
+
+```javascript
+// sw.js
+const CACHE_NAME = "my-cache-v1";
+const urlsToCache = ["/", "/index.html", "/style.css", "/app.js"];
+
+// 安装事件：缓存资源
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    }),
+  );
+});
+
+// 激活事件：清理旧缓存
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        }),
+      );
+    }),
+  );
+});
+
+// 拦截请求：优先返回缓存，否则发起网络请求
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    }),
+  );
+});
+```
+
+### 3. 缓存策略
+
+| 策略                   | 说明                                   | 适用场景           |
+| ---------------------- | -------------------------------------- | ------------------ |
+| Cache First            | 优先查询缓存，缓存不存在才发起网络请求 | 静态资源、图片     |
+| Network First          | 优先发起网络请求，失败才查询缓存       | API、实时数据      |
+| Stale While Revalidate | 先返回缓存，后台更新                   | 新闻、文章         |
+| Network Only           | 仅使用网络请求                         | 需要实时数据的页面 |
+| Cache Only             | 仅使用缓存                             | 离线资源           |
+
+## 十四、Page Visibility API
+
+Page Visibility API 用于检测页面是否可见，可以监听用户是否切换到其他标签页，用于节省资源、暂停视频等。
+
+```javascript
+// 检查当前页面可见性
+console.log(document.visibilityState); // "visible" 或 "hidden"
+
+// 监听可见性变化
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    console.log("页面变为可见");
+    // 恢复播放、重新加载数据等
+  } else {
+    console.log("页面被隐藏");
+    // 暂停播放、停止动画等
+  }
+});
+```
+
+## 十五、新的全局属性
+
+### 1. contenteditable
+
+设置元素内容是否可编辑。
+
+```html
+<!-- 可编辑的 div -->
+<div contenteditable="true">这段文字可以编辑</div>
+
+<!-- 禁用编辑 -->
+<div contenteditable="false">这段文字不可以编辑</div>
+```
+
+### 2. spellcheck
+
+控制是否对文本进行拼写检查（仅对非中文有效）。
+
+```html
+<textarea spellcheck="true"></textarea>
+```
+
+### 3. translate
+
+控制浏览器翻译功能是否对该元素应用。
+
+```html
+<!-- 不翻译代码块 -->
+<pre translate="no">
+  const hello = "world";
+</pre>
+```
+
+## 十六、History API（单页应用路由）
+
+HTML5增强了History API，允许在不刷新页面的情况下改变地址栏URL。
+
+```javascript
+// 向浏览器历史记录栈中压入一条记录
+history.pushState({ id: 1 }, "页面标题", "/page/1");
+
+// 替换当前历史记录
+history.replaceState({ id: 2 }, "新标题", "/page/2");
+
+// 监听历史记录变化
+window.addEventListener("popstate", (event) => {
+  console.log("历史记录改变，state:", event.state);
 });
 ```
