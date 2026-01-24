@@ -24,8 +24,71 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 <BaseLayout pageTitle={tag}>
-  <p>包含「{tag}」标签的文章</p>
-  <ul style="padding: 0">
-    {posts.map((post: any) => <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />)}
-  </ul>
+  <div class="space-y-8 mt-6">
+    <!-- 标题区域 -->
+    <div class="mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <a href="/tags/" class="text-blue-500 hover:text-blue-700 text-sm font-medium">← 返回标签列表</a>
+      </div>
+      
+      <h1 
+        class="text-4xl md:text-5xl font-bold mb-4"
+      >
+        🏷️ 
+        <span
+          style="background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block;"
+        >
+          {tag}
+        </span>
+      </h1>
+      
+      <p class="text-gray-600 text-lg mt-4">
+        共有 <span class="font-bold text-blue-600">{posts.length}</span> 篇文章
+      </p>
+    </div>
+
+    <!-- 文章列表 -->
+    <div class="space-y-3">
+      {posts.length > 0 ? (
+        <ul class="space-y-2" style="padding: 0; list-style: none;">
+          {posts.map((post: any) => (
+            <li class="list-none">
+              <a 
+                href={`/posts/${post.id}/`}
+                class="
+                  block p-4 rounded-lg
+                  bg-gradient-to-r from-blue-50 to-indigo-50
+                  hover:from-blue-100 hover:to-indigo-100
+                  border border-blue-200 hover:border-blue-400
+                  transition-all duration-300
+                  hover:shadow-md hover:scale-[1.02]
+                  group
+                "
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors truncate">
+                      {post.data.title}
+                    </h3>
+                    {post.data.description && (
+                      <p class="text-sm text-gray-600 mt-1 line-clamp-1">
+                        {post.data.description}
+                      </p>
+                    )}
+                  </div>
+                  <span class="text-xs text-gray-500 whitespace-nowrap mt-1">
+                    {post.data.pubDate?.toLocaleDateString('zh-CN')}
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-gray-500 text-lg">还没有此标签的文章</p>
+        </div>
+      )}
+    </div>
+  </div>
 </BaseLayout>
