@@ -6,7 +6,7 @@ author: "海川"
 image:
   url: ""
   alt: ""
-tags: ["HTML"]
+tags: ["HTML5"]
 ---
 
 ## 一、HTML5 基础概念

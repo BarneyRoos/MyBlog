@@ -5,55 +5,76 @@ import { getCollection } from "astro:content";
 const allPosts = await getCollection("blog");
 ---
 <BaseLayout pageTitle={'我的博客'}>
-  <div class="blog-header">
-    <h1 class="page-title">博客文章</h1>
-    <p class="page-subtitle">分享技术见解与开发经验</p>
-  </div>
-  
-  <div class="posts-grid">
-    {allPosts.map((post: any) => (
-      <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />
-    ))}
+  <div class="space-y-8">
+    <!-- 标题区域 -->
+    <div class="text-center mb-12">
+      <h1 
+        class="text-4xl font-bold mb-3"
+      >
+        📝 
+        <span
+          style="display: inline-block; background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+        >
+        博客文章
+        </span>
+      </h1>
+      <p class="text-gray-600 text-lg">分享技术见解与开发经验</p>
+    </div>
+
+    <!-- 文章列表网格 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {allPosts.map((post: any) => (
+        <a
+          href={`/posts/${post.id}/`}
+          class="
+            group relative flex flex-col p-6 rounded-xl
+            bg-gradient-to-br from-blue-50 to-indigo-50
+            hover:from-blue-100 hover:to-indigo-100
+            border border-blue-200 hover:border-blue-400
+            transition-all duration-300 ease-out
+            hover:shadow-lg hover:scale-[1.02]
+            overflow-hidden
+          "
+        >
+          <!-- 背景装饰 -->
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-200 to-indigo-200 rounded-full -mr-16 -mt-16 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+
+          <!-- 内容 -->
+          <div class="relative z-10 flex-1">
+            <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-3">
+              {post.data.title}
+            </h3>
+            
+            {post.data.description && (
+              <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                {post.data.description}
+              </p>
+            )}
+          </div>
+
+          <!-- 底部信息 -->
+          <div class="relative z-10 flex items-center justify-between pt-4 border-t border-blue-200 group-hover:border-blue-300 transition-colors">
+            <div class="flex gap-2 flex-wrap">
+              {post.data.tags && post.data.tags.map((tag: string) => (
+                <span class="text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded-full font-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <span class="text-xs text-gray-500 font-medium">
+              {post.data.pubDate?.toLocaleDateString('zh-CN')}
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- 统计信息 -->
+    <div class="mt-16 p-8 bg-gradient-to-r from-slate-100 to-slate-50 rounded-xl border border-slate-200">
+      <div class="text-center">
+        <div class="text-4xl font-bold text-blue-600 mb-2">{allPosts.length}</div>
+        <div class="text-gray-600 text-lg">篇优质文章，持续更新中...</div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
-
-<style>
-  .blog-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0 0 0.5rem;
-  }
-  
-  .page-subtitle {
-    color: #64748b;
-    font-size: 1.2rem;
-    margin: 0;
-  }
-  
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-  
-  @media (max-width: 768px) {
-    .posts-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    
-    .page-title {
-      font-size: 2rem;
-    }
-  }
-</style>
