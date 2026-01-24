@@ -1,35 +1,173 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro"
 import Hero from "../components/Hero.astro"
-const pageTitle = "海川的日志";
+import { getCollection } from "astro:content"
+
+const pageTitle = "低维展开 - 前端全栈成长之路"
+const allPosts = await getCollection("blog")
+const recentPosts = allPosts.slice(0, 3) // 最新3篇文章
 ---
+
 <BaseLayout pageTitle={pageTitle}>
+  <!-- Hero 区域 -->
   <Hero 
-    title="欢迎来到我的技术博客" 
-    subtitle="分享前端、后端、AI和全栈开发的学习笔记与实践经验"
+    title="🚀 低维展开" 
+    subtitle="Web前端开发 | 全栈探索 | 技术成长"
   />
-  <section class="intro-section">
-    <h2>关于这个博客</h2>
-    <p>这里记录了我在全栈开发道路上的探索与成长，涵盖 Astro、React、Node.js、数据库等技术栈。</p>
+
+  <!-- 个人亮点介绍 -->
+  <section class="space-y-8 mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- 亮点卡片1 -->
+      <div class="p-6 rounded-xl bg-linear-to-br from-blue-50 to-blue-100 border border-blue-200 hover:shadow-lg transition-all">
+        <div class="text-4xl mb-3">🎯</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">6年前端经验</h3>
+        <p class="text-gray-700">从jQuery到React、Next.js，深耕现代Web开发</p>
+      </div>
+
+      <!-- 亮点卡片2 -->
+      <div class="p-6 rounded-xl bg-linear-to-br from-purple-50 to-purple-100 border border-purple-200 hover:shadow-lg transition-all">
+        <div class="text-4xl mb-3">⚛️</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">React / Next.js</h3>
+        <p class="text-gray-700">专精现代前端框架，从组件化到全栈应用</p>
+      </div>
+
+      <!-- 亮点卡片3 -->
+      <div class="p-6 rounded-xl bg-linear-to-br from-indigo-50 to-indigo-100 border border-indigo-200 hover:shadow-lg transition-all">
+        <div class="text-4xl mb-3">🎨</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">全栈能力</h3>
+        <p class="text-gray-700">前后端技术通吃，独立交付完整系统</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新文章 -->
+  <section class="space-y-6 mt-12">
+    <div class="flex items-center justify-between">
+      <h2 class="text-3xl font-bold text-gray-800">📚 最新文章</h2>
+      <a href="/blog/" class="text-blue-600 hover:text-blue-800 font-semibold transition-colors">
+        查看全部 →
+      </a>
+    </div>
+
+    {recentPosts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {recentPosts.map((post) => (
+          <a
+            href={`/posts/${post.id}/`}
+            class="group p-6 rounded-xl bg-linear-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200 hover:border-blue-400 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+          >
+            <h3 class="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
+              {post.data.title}
+            </h3>
+            {post.data.description && (
+              <p class="text-gray-600 text-sm line-clamp-2 mb-4">
+                {post.data.description}
+              </p>
+            )}
+            <div class="flex items-center justify-between pt-4 border-t border-blue-200">
+              <div class="flex gap-2 flex-wrap">
+                {post.data.tags?.slice(0, 2).map((tag) => (
+                  <span class="text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded-full font-medium">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <span class="text-xs text-gray-500">
+                {post.data.pubDate?.toLocaleDateString('zh-CN')}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center p-12 bg-gray-50 rounded-xl">
+        <p class="text-gray-500">暂无文章</p>
+      </div>
+    )}
+  </section>
+
+  <!-- 核心技能栈 -->
+  <section class="space-y-6 mt-12">
+    <h2 class="text-3xl font-bold text-gray-800">🛠️ 技能栈</h2>
+    
+    <div class="space-y-4">
+      <!-- 前端 -->
+      <div class="p-6 rounded-xl bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-200">
+        <p class="font-bold text-gray-800 mb-3">前端技术</p>
+        <div class="flex flex-wrap gap-2">
+          {["React", "Next.js", "TypeScript", "Tailwind CSS", "Ant Design"].map((skill) => (
+            <span class="px-3 py-1 bg-blue-200 text-blue-800 rounded-full text-sm font-medium">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- 后端 -->
+      <div class="p-6 rounded-xl bg-linear-to-r from-purple-50 to-indigo-50 border border-purple-200">
+        <p class="font-bold text-gray-800 mb-3">后端技术</p>
+        <div class="flex flex-wrap gap-2">
+          {["Node.js", "NestJS", "TypeScript", "MySql", "MongoDB"].map((skill) => (
+            <span class="px-3 py-1 bg-purple-200 text-purple-800 rounded-full text-sm font-medium">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- 工具 -->
+      <div class="p-6 rounded-xl bg-linear-to-r from-indigo-50 to-pink-50 border border-indigo-200">
+        <p class="font-bold text-gray-800 mb-3">开发工具</p>
+        <div class="flex flex-wrap gap-2">
+          {["Git", "Docker", "Vite", "Astro", "VS Code"].map((skill) => (
+            <span class="px-3 py-1 bg-indigo-200 text-indigo-800 rounded-full text-sm font-medium">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA 区域 -->
+  <section class="mt-12 p-8 rounded-xl bg-linear-to-r from-blue-100 via-purple-100 to-indigo-100 border border-blue-200 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">👋 欢迎交流</h2>
+    <p class="text-gray-700 mb-6 text-lg">
+      如果你对我的技术文章、项目或想法感兴趣，欢迎通过以下方式与我联系
+    </p>
+    <div class="flex gap-4 justify-center flex-wrap">
+      <a href="/about/" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+        📋 查看我的简历
+      </a>
+      <a href="/blog/" class="px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+        📚 浏览全部文章
+      </a>
+      <a href="/tags/" class="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+        🏷️ 按标签浏览
+      </a>
+    </div>
+  </section>
+
+  <!-- 统计信息 -->
+  <section class="mt-12 p-8 rounded-xl bg-linear-to-r from-slate-100 to-slate-50 border border-slate-200">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-4xl font-bold text-blue-600">{allPosts.length}</div>
+        <div class="text-gray-600 text-sm mt-2">篇文章</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-purple-600">6</div>
+        <div class="text-gray-600 text-sm mt-2">年经验</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-indigo-600">4</div>
+        <div class="text-gray-600 text-sm mt-2">大项目</div>
+      </div>
+      <div>
+        <div class="text-4xl font-bold text-pink-600">∞</div>
+        <div class="text-gray-600 text-sm mt-2">持续学习</div>
+      </div>
+    </div>
   </section>
 </BaseLayout>
-
-<style>
-  .intro-section {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  }
-  
-  .intro-section h2 {
-    color: #334155;
-    margin-top: 0;
-  }
-  
-  .intro-section p {
-    color: #475569;
-    line-height: 1.8;
-    font-size: 1.1rem;
-  }
-</style>
