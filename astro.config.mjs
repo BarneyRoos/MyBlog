@@ -7,10 +7,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  // GitHub Pages 配置（将 YOUR_USERNAME 替换为你的 GitHub 用户名，YOUR_REPO 替换为仓库名）
-  // 如果是用户或组织页面，使用: https://YOUR_USERNAME.github.io/
-  // 如果是项目页面，使用: https://YOUR_USERNAME.github.io/YOUR_REPO/
+  // GitHub Pages 配置
+  // site 用于生成正确的 sitemap 和规范 URL
   site: "https://BarneyRoos.github.io/MyTechStack/",
+
+  // base 用于设置应用的根路径（因为部署在子目录）
+  base: "/MyTechStack/",
 
   integrations: [react()],
 
