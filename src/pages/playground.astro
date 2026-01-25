@@ -4,10 +4,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="代码练兵场 - 实时编辑和预览">
 
-  <div class="playground-container">
-    <div class="text-center mb-12">
+  <div class="min-h-screen bg-[#fffcf8] p-5">
+    <div class="max-w-7xl mx-auto mb-8 text-center">
       <h1 
-        class="text-4xl font-bold mb-3"
+        class="text-4xl font-bold text-slate-800 mb-3"
       >
         💻
         <span
@@ -16,41 +16,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         代码练兵场
         </span>
       </h1>
-      <p class="text-gray-600 text-lg">使用 Monaco Editor 实时编写和预览 HTML、CSS、JavaScript 代码</p>
+      <p class="text-lg text-slate-600">使用 Monaco Editor 实时编写和预览 HTML、CSS、JavaScript 代码</p>
     </div>
 
-    <div class="editor-wrapper">
-      <div class="editors-panel">
-        <div class="editor-tab-buttons">
-          <button class="tab-btn active" data-tab="html">HTML</button>
-          <button class="tab-btn" data-tab="css">CSS</button>
-          <button class="tab-btn" data-tab="js">JavaScript</button>
+    <div class="grid grid-cols-2 gap-1 max-w-7xl mx-auto" style="height: calc(100vh - 200px);">
+      <div class="flex flex-col bg-white rounded-lg shadow overflow-hidden">
+        <div class="flex border-b-2 border-gray-200 bg-gray-50">
+          <button class="flex-1 px-4 py-3 border-none bg-transparent cursor-pointer text-sm font-medium text-gray-500 border-b-2 border-transparent transition-all hover:bg-gray-200 hover:text-slate-800 active" data-tab="html">HTML</button>
+          <button class="flex-1 px-4 py-3 border-none bg-transparent cursor-pointer text-sm font-medium text-gray-500 border-b-2 border-transparent transition-all hover:bg-gray-200 hover:text-slate-800" data-tab="css">CSS</button>
+          <button class="flex-1 px-4 py-3 border-none bg-transparent cursor-pointer text-sm font-medium text-gray-500 border-b-2 border-transparent transition-all hover:bg-gray-200 hover:text-slate-800" data-tab="js">JavaScript</button>
         </div>
 
-        <div class="editor-content">
-          <div class="editor-pane active" data-tab="html" id="htmlPane"></div>
-          <div class="editor-pane" data-tab="css" id="cssPane"></div>
-          <div class="editor-pane" data-tab="js" id="jsPane"></div>
+        <div class="flex-1 relative overflow-hidden">
+          <div class="absolute inset-0 opacity-100 visible transition-opacity duration-300" data-tab="html" id="htmlPane"></div>
+          <div class="absolute inset-0 opacity-0 invisible transition-opacity duration-300" data-tab="css" id="cssPane"></div>
+          <div class="absolute inset-0 opacity-0 invisible transition-opacity duration-300" data-tab="js" id="jsPane"></div>
         </div>
 
-        <div class="editor-footer">
-          <select id="themeSelector" class="theme-selector">
+        <div class="flex gap-2.5 px-4 py-3 border-t border-gray-200 bg-gray-50 items-center">
+          <select id="themeSelector" class="px-2.5 py-1.5 border border-gray-400 rounded bg-white text-slate-800 cursor-pointer text-xs transition-all hover:border-blue-500">
             <option value="vs">Light</option>
             <option value="vs-dark" selected>Dark</option>
             <option value="hc-black">High Contrast</option>
           </select>
-          <button id="clearBtn" class="btn-clear">清空所有</button>
-          <button id="downloadBtn" class="btn-download">下载代码</button>
-          <span class="auto-save-indicator">自动保存中...</span>
+          <button id="clearBtn" class="px-3.5 py-2 border border-gray-400 bg-white rounded cursor-pointer text-sm transition-all hover:bg-red-500 hover:text-white hover:border-red-500">清空所有</button>
+          <button id="downloadBtn" class="px-3.5 py-2 border border-gray-400 bg-white rounded cursor-pointer text-sm transition-all hover:bg-green-600 hover:text-white hover:border-green-600">下载代码</button>
+          <span class="ml-auto text-xs text-gray-400">自动保存中...</span>
         </div>
       </div>
 
-      <div class="preview-panel">
-        <div class="preview-header">
-          <h3>预览</h3>
-          <button id="refreshBtn" class="btn-refresh" title="刷新预览">⟳</button>
+      <div class="flex flex-col bg-white rounded-lg shadow overflow-hidden">
+        <div class="flex justify-between items-center px-4 py-1 border-b border-gray-200 bg-gray-50">
+          <h3 class="m-0 text-slate-800 text-sm font-medium">预览</h3>
+          <button id="refreshBtn" class="px-3 py-1.5 border border-gray-400 bg-white rounded cursor-pointer text-base transition-all hover:bg-blue-500 hover:text-white hover:border-blue-500" title="刷新预览">⟳</button>
         </div>
-        <iframe id="previewFrame" class="preview-iframe" sandbox="allow-scripts"></iframe>
+        <iframe id="previewFrame" class="flex-1 border-none bg-white" sandbox="allow-scripts"></iframe>
       </div>
     </div>
   </div>
@@ -59,248 +59,3 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <script>
   import '../scripts/playground.js';
 </script>
-
-<style>
-  .playground-container {
-    min-height: 100vh;
-    background: #f8f9fa;
-    padding: 20px;
-  }
-
-  .playground-header {
-    max-width: 1400px;
-    margin: 0 auto 30px;
-    text-align: center;
-  }
-
-  .playground-header h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 10px;
-  }
-
-  .playground-header p {
-    font-size: 1.1rem;
-    color: #7f8c8d;
-  }
-
-  .editor-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    height: calc(100vh - 200px);
-  }
-
-  .editors-panel {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-
-  .editor-tab-buttons {
-    display: flex;
-    border-bottom: 2px solid #ecf0f1;
-    background: #f8f9fa;
-  }
-
-  .tab-btn {
-    flex: 1;
-    padding: 12px 16px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    color: #7f8c8d;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s;
-  }
-
-  .tab-btn:hover {
-    background: #ecf0f1;
-    color: #2c3e50;
-  }
-
-  .tab-btn.active {
-    color: #3498db;
-    border-bottom-color: #3498db;
-    background: white;
-  }
-
-  .editor-content {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .editor-pane {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s;
-  }
-
-  .editor-pane.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* Monaco Editor 容器样式 */
-  .editor-pane {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s;
-  }
-
-  .editor-pane.active :global(.monaco-editor) {
-    height: 100%;
-    width: 100%;
-  }
-
-  .editor-footer {
-    display: flex;
-    gap: 10px;
-    padding: 12px 16px;
-    border-top: 1px solid #ecf0f1;
-    background: #f8f9fa;
-    align-items: center;
-  }
-
-  .theme-selector {
-    padding: 6px 10px;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    background: white;
-    color: #2c3e50;
-    cursor: pointer;
-    font-size: 12px;
-    transition: all 0.3s;
-  }
-
-  .theme-selector:hover {
-    border-color: #3498db;
-  }
-
-  .btn-clear,
-  .btn-download {
-    padding: 8px 14px;
-    border: 1px solid #bdc3c7;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.3s;
-  }
-
-  .btn-clear:hover {
-    background: #e74c3c;
-    color: white;
-    border-color: #e74c3c;
-  }
-
-  .btn-download:hover {
-    background: #27ae60;
-    color: white;
-    border-color: #27ae60;
-  }
-
-  .auto-save-indicator {
-    margin-left: auto;
-    font-size: 12px;
-    color: #95a5a6;
-  }
-
-  .preview-panel {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-
-  .preview-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid #ecf0f1;
-    background: #f8f9fa;
-  }
-
-  .preview-header h3 {
-    margin: 0;
-    color: #2c3e50;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .btn-refresh {
-    padding: 6px 12px;
-    border: 1px solid #bdc3c7;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s;
-  }
-
-  .btn-refresh:hover {
-    background: #3498db;
-    color: white;
-    border-color: #3498db;
-  }
-
-  .preview-iframe {
-    flex: 1;
-    border: none;
-    background: white;
-  }
-
-  @media (max-width: 1200px) {
-    .editor-wrapper {
-      grid-template-columns: 1fr;
-      height: auto;
-      gap: 20px;
-    }
-
-    .editors-panel,
-    .preview-panel {
-      height: 500px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .playground-header h1 {
-      font-size: 1.8rem;
-    }
-
-    .editor-wrapper {
-      height: auto;
-    }
-
-    .editors-panel,
-    .preview-panel {
-      height: 400px;
-    }
-
-    .tab-btn {
-      padding: 10px 12px;
-      font-size: 12px;
-    }
-  }
-</style>
