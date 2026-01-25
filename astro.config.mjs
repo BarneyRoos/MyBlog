@@ -9,10 +9,10 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   // GitHub Pages 配置
   // site 用于生成正确的 sitemap 和规范 URL
-  site: "https://BarneyRoos.github.io/MyTechStack/",
+  site: "https://BarneyRoos.github.io/MyBlog/",
 
   // base 用于设置应用的根路径（因为部署在子目录）
-  base: "/MyTechStack/",
+  base: "/MyBlog/",
 
   integrations: [react()],
 
