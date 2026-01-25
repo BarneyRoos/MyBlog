@@ -56,75 +56,19 @@ export default function BlueprintBanner({
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
-      // 绘制中心结构（火箭形状简化版）
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-      ctx.lineWidth = 2;
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-
-      // 火箭主体（简化）
-      const rocketHeight = 200;
-      const rocketWidth = 80;
-
-
-
-
-
-      // 绘制侧面引擎（动画旋转）
-      const engineRotation = (time % 360) * (Math.PI / 180);
-      const engineDistance = 60;
-
-      for (let i = 0; i < 3; i++) {
-        const angle = engineRotation + (i * Math.PI * 2) / 3;
-        const ex = centerX + Math.cos(angle) * engineDistance;
-        const ey = centerY + rocketHeight / 2 - 40 + Math.sin(angle) * (engineDistance * 0.5);
-
-        ctx.beginPath();
-        ctx.arc(ex, ey, 12, 0, Math.PI * 2);
-        ctx.stroke();
-      }
-
-      // 绘制辅助线和标注
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([5, 5]);
-
-      // 上方标注线
-      ctx.beginPath();
-      ctx.moveTo(centerX - rocketWidth / 2 - 40, centerY - rocketHeight / 2);
-      ctx.lineTo(centerX - rocketWidth / 2 - 80, centerY - rocketHeight / 2);
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(centerX + rocketWidth / 2 + 40, centerY - rocketHeight / 2);
-      ctx.lineTo(centerX + rocketWidth / 2 + 80, centerY - rocketHeight / 2);
-      ctx.stroke();
-
-      ctx.setLineDash([]);
-
-      // 绘制坐标轴箭头
-      ctx.strokeStyle = 'rgba(100, 200, 255, 0.6)';
-      ctx.fillStyle = 'rgba(100, 200, 255, 0.6)';
-      ctx.lineWidth = 2;
-
-      // X轴
-      ctx.beginPath();
-      ctx.moveTo(centerX - 120, centerY + 120);
-      ctx.lineTo(centerX - 60, centerY + 120);
-      ctx.stroke();
-
-      // Y轴
-      ctx.beginPath();
-      ctx.moveTo(centerX - 120, centerY + 120);
-      ctx.lineTo(centerX - 120, centerY + 60);
-      ctx.stroke();
-
-      // 绘制脉动光圈
-      const pulseSize = 40 + Math.sin(time * 0.05) * 15;
-      ctx.strokeStyle = `rgba(100, 200, 255, ${0.3 + Math.sin(time * 0.05) * 0.3})`;
+      // ===== 脉动光圈 =====
+      const pulseSize = 80 + Math.sin(time * 0.01) * 80;
+      ctx.save();
+      ctx.shadowBlur = 5;
+      ctx.shadowColor = 'rgba(100, 200, 255)';
+      ctx.strokeStyle = `rgba(100, 200, 255, ${0.3 + Math.sin(time * 0.01) * 0.3})`;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.arc(centerX, centerY, pulseSize, 0, Math.PI * 2);
       ctx.stroke();
+      ctx.restore();
+
+      ctx.setLineDash([]);
     };
 
     const drawCornerElements = () => {
