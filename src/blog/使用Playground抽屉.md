@@ -11,7 +11,8 @@ tags: ["教程", "使用指南"]
 
 ## 在markdown中添加练习链接
 
-> 该功能只在本网站有效，背后有专门的组件代码支持
+> 该功能只在本网站有效，背后有专门的组件代码支持。
+> 建议在重点需要练习的位置加上该功能，以方便随时练习。
 
 可以在markdown文档中任意位置添加一个HTML标签（比如button），点击后会在右侧弹出代码练兵场抽屉。
 
@@ -19,7 +20,7 @@ tags: ["教程", "使用指南"]
 
 ```js
 <!-- 可以使用button、a等标签，推荐使用预定义class -->
-<button class="practice-link" href="javascript:void(0)" onclick="window.openPlaygroundDrawer()"> 练习一下</button>
+<button class="practice-link" onclick="window.openPlaygroundDrawer()"> 练习一下</button>
 ```
 
 ## 效果说明
@@ -30,6 +31,10 @@ tags: ["教程", "使用指南"]
 - 点击关闭按钮、点击左侧半透明区域或按ESC键都可关闭抽屉
 
 <button class="practice-link" href="javascript:void(0)" onclick="window.openPlaygroundDrawer()"> 练习一下</button>
+
+## 页面组件
+
+打开博客文章后，会在右下角显示一个悬浮的圆形按钮，点击即可随时打开练兵场。
 
 ## 小贴士
 

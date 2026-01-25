@@ -1,5 +1,5 @@
 ---
-title: "掌握Grid布局"
+title: "快速掌握Grid布局核心"
 pubDate: 2026-01-25T09:30:00+08:00
 description: "Grid布局由浅入深的完整学习指南，通过循序渐进的实践案例掌握Grid布局"
 author: "海川"
@@ -143,51 +143,58 @@ tags: ["教程", "Grid布局"]
 ### HTML
 
 ```html
-<div class="layout">
-  <header>头部</header>
-  <aside>侧边栏</aside>
-  <main>主内容</main>
-  <footer>页脚</footer>
+<div class="container">
+  <header class="header">Header</header>
+  <aside class="leftside">SideBar</aside>
+  <main class="content">Content</main>
+  <aside class="rightside">SideBar</aside>
+  <footer class="footer">Footer</footer>
 </div>
 ```
 
 ### CSS
 
 ```css
-.layout {
+.container {
   display: grid;
   grid-template-columns: 200px 1fr 200px;
   grid-template-rows: 60px 1fr 60px;
-  gap: 10px;
   height: 100vh;
 
-  /* 用字符串"画出"布局结构 */
   grid-template-areas:
     "header header header"
-    "sidebar main aside"
+    "leftSide main rightSide"
     "footer footer footer";
 }
 
 header {
   grid-area: header;
-  background: #333;
-  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: #ccc;
 }
 
-aside {
-  grid-area: sidebar;
-  background: #f0f0f0;
+aside.leftside {
+  grid-area: leftSide;
+  background: #aaa;
+  padding: 20px;
 }
 
 main {
   grid-area: main;
-  background: #fff;
+  padding: 20px;
+}
+
+aside.rightside {
+  grid-area: rightSide;
+  background: #aaa;
+  padding: 20px;
 }
 
 footer {
   grid-area: footer;
-  background: #333;
-  color: white;
+  background: #ccc;
 }
 ```
 
@@ -253,6 +260,8 @@ footer {
 
 6 个卡片自动排成 3 列，每列等宽。
 
+<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()" class="practice-link">练习一下</a>
+
 ### 关键理解
 
 - `repeat(次数, 值)` 重复指定次数的值
@@ -290,6 +299,7 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
+  align-content: start;
 }
 
 .card {
@@ -309,6 +319,8 @@ footer {
 - 容器宽度足够放 4 列 → 显示 4 列
 - 容器宽度只能放 3 列 → 自动调整为 3 列，每列自动扩展
 - 容器宽度很小 → 自动调整为 1 列，卡片铺满宽度
+
+<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()" class="practice-link">练习一下</a>
 
 ### 关键理解
 
@@ -470,11 +482,11 @@ footer {
       <div>订单 #003 - $789</div>
     </div>
   </div>
-  <div class="card">
+  <div class="card zhuan">
     <h3>转化率</h3>
     <p class="number">3.2%</p>
   </div>
-  <div class="card">
+  <div class="card tiao">
     <h3>跳出率</h3>
     <p class="number">21.5%</p>
   </div>
@@ -537,7 +549,7 @@ footer {
 }
 
 .card.card-large .number {
-  font-size: 40px;
+  font-size: 20px;
 }
 
 /* 宽卡片占2列 */
@@ -552,6 +564,11 @@ footer {
 
 .mini-list div {
   margin: 4px 0;
+}
+
+.zhuan,
+.tiao {
+  grid-column: span 2;
 }
 
 /* 响应式：平板端 */
@@ -623,9 +640,9 @@ footer {
 
 - 🎨 尝试修改案例中的数值，观察效果变化
 - 📱 在不同屏幕大小下测试响应式布局
-- 🚀 用 Grid 重新设计你的项目布局
+- 🚀 用 Grid 重新设计项目布局
 - 📖 深入学习高级特性：`auto-fill`、`grid-auto-flow`、命名网格线等
 
 ---
 
-**祝你学习愉快！通过这 8 个案例的实践，你已经掌握了 Grid 布局的核心，可以应对大部分实际项目需求。** 🎉
+**至此已经掌握了Grid布局的核心，更多细节请参考「[复习Grid布局](/posts/快速复习Grid布局)」** 🎉
