@@ -27,7 +27,7 @@ import ThemeIcon from './ThemeIcon.astro';
       </button>
       
       <button class="hidden md:inline-flex p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors" aria-label="声音">
-        <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
+        <a href={`${import.meta.env.BASE_URL}rss.xml`} target="_blank" rel="noopener noreferrer">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss-icon lucide-rss"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
         </a>
       </button>
