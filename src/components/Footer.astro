@@ -3,11 +3,11 @@
 
 <footer class="relative mt-20 pt-0">
   <!-- 波浪背景 -->
-  <svg viewBox="0 0 1200 300" preserveAspectRatio="none" class="absolute top-0 left-0 w-full h-auto" style="height: 280px;">
+  <svg viewBox="0 0 1200 300" preserveAspectRatio="none" class="absolute top-0 left-0 w-full" style="height: 280px; transform: scaleY(-1); z-index: 1; top: -238px;">
     <defs>
       <linearGradient id="footer-wave-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" style="stop-color:#7dd3fc;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+        <stop offset="0%" style="stop-color:#0284c7;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#7dd3fc;stop-opacity:1" />
       </linearGradient>
     </defs>
     
@@ -17,9 +17,9 @@
     <path d="M0,160 C100,100 200,220 300,150 C450,60 600,200 750,140 C900,90 1050,180 1200,160 L1200,120 C1150,150 1050,80 900,120 C750,170 600,50 450,110 C300,180 150,60 0,120 Z" fill="url(#footer-wave-gradient)"></path>
   </svg>
   
-  <!-- Footer 内容区域 -->
-  <div class="relative z-10 bg-gradient-to-b from-sky-200 to-blue-400 dark:from-slate-700 dark:to-slate-900 pt-32 pb-12 md:pb-16">
-    <div class="max-w-[70rem] mx-auto px-6 md:px-8">
+  <!-- Footer 内容区域 -->  
+  <div class="relative z-10 bg-linear-to-b from-[#c4e4f5] to-[#f6fbfd] dark:from-slate-700 dark:to-slate-900  pb-12 md:pb-16">
+    <div class="max-w-280 mx-auto px-6 md:px-8">
       <!-- 主内容网格 -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <!-- 左侧：邮箱订阅 -->
