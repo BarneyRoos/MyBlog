@@ -488,7 +488,7 @@
   overflow: hidden;
 }
 
-.markdown-body .practice-link::before {
+.markdown-body .practice-link::after {
   content: "▶";
   font-size: 0.8em;
   margin-right: 4px;
@@ -496,10 +496,10 @@
 }
 
 .markdown-body .practice-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-  color: white !important;
-  border-bottom: none;
+  /* transform: translateY(-2px); */
+  box-shadow: 0 6px 20px rgba(135, 156, 249, 0.6);
+  /* color: white !important;
+  border-bottom: none; */
 }
 
 .markdown-body .practice-link:active {
@@ -507,7 +507,7 @@
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
 }
 
-.markdown-body .practice-link:hover::before {
+.markdown-body .practice-link:hover::after {
   transform: translateX(4px);
 }
 
