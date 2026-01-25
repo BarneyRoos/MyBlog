@@ -123,6 +123,8 @@ tags: ["教程", "Grid布局"]
 
 头部横跨整行，下面是固定宽度侧边栏 + 自适应主内容。
 
+<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()" class="practice-link">练习一下</a>
+
 ### 关键理解
 
 - `1fr` 表示占用剩余空间的 1 份
@@ -192,6 +194,8 @@ footer {
 ### 效果
 
 经典的"圣杯布局"：头部 + 左中右三栏 + 页脚。
+
+<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()" class="practice-link">练习一下</a>
 
 ### 关键理解
 
