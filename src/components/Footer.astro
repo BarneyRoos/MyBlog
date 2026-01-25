@@ -21,7 +21,7 @@
   <div class="relative z-10 bg-linear-to-b from-[#c4e4f5] to-[#f6fbfd] dark:from-slate-700 dark:to-slate-900 pb-12 md:pb-16 pt-12">
     <div class="max-w-7xl mx-auto px-6 md:px-8">
       <!-- 主内容网格 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         <!-- 左侧：网站简介 -->
         <div>
           <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">关于本站</h3>
@@ -49,6 +49,12 @@
             <li><a href={`${import.meta.env.BASE_URL}rss.xml`} target="_blank" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">RSS 订阅</a></li>
             <li><a href="mailto:paykan.miao@gmail.com" target="_blank" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">邮件联系</a></li>
           </ul>
+        </div>
+
+        <!-- 微信二维码 -->
+        <div class="mt-4 md:mt-0 md:ml-6 flex flex-col items-center justify-center">
+          <h4 class=" font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">微信</h4>
+          <img src="/wechat.png" alt="微信二维码" class="w-28 h-28 rounded-lg shadow border border-blue-200" loading="lazy" />
         </div>
       </div>
       
