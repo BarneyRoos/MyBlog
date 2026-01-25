@@ -1,12 +1,12 @@
 ---
-title: "使用Playground抽屉的方法"
+title: "文档中加入「练习一下」的方法"
 pubDate: 2026-01-25T10:00:00+08:00
 description: "如何在markdown文档中添加打开代码练兵场的链接"
 author: "海川"
 image:
   url: ""
   alt: ""
-tags: ["教程", "使用指南"]
+tags: ["教程", "使用指南", ""]
 ---
 
 ## 在markdown中添加练习链接
@@ -15,12 +15,11 @@ tags: ["教程", "使用指南"]
 
 ### 方法1：使用HTML链接
 
-在markdown中直接添加HTML链接，使用JavaScript的`onclick`事件：
+在markdown中直接添加HTML标签（比如button），设置`onclick=window.openPlaygroundDrawer()`，可以通过`class="practice-link"`使用预定义的样式，也可自行加入行内样式。
 
-```html
-<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()"
-  >练习一下</a
->
+```js
+<!-- 如果需要样式，class是必须要加的 -->
+<button class="practice-link" href="javascript:void(0)" onclick="window.openPlaygroundDrawer()"> 练习一下</button>
 ```
 
 ### 方法2：使用自定义组件
@@ -34,25 +33,7 @@ tags: ["教程", "使用指南"]
 - 所有代码会自动保存到`localStorage`中
 - 点击关闭按钮、点击左侧半透明区域或按ESC键都可关闭抽屉
 
-## 使用示例
-
-### 在你的Grid布局文档中
-
-在案例代码块之后添加：
-
-```markdown
-### 实际应用
-
-前面学了这个案例，现在可以 <a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()">练习一下</a> 吧！
-```
-
-### 在你的Flex布局文档中
-
-```markdown
-## 练兵场
-
-想要快速验证你的Flex布局想法吗？<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()">点击这里打开编辑器</a>
-```
+<button class="practice-link" href="javascript:void(0)" onclick="window.openPlaygroundDrawer()"> 练习一下</button>
 
 ## 小贴士
 
