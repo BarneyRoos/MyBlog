@@ -18,45 +18,37 @@
   </svg>
   
   <!-- Footer 内容区域 -->  
-  <div class="relative z-10 bg-linear-to-b from-[#c4e4f5] to-[#f6fbfd] dark:from-slate-700 dark:to-slate-900  pb-12 md:pb-16">
-    <div class="max-w-280 mx-auto px-6 md:px-8">
+  <div class="relative z-10 bg-linear-to-b from-[#c4e4f5] to-[#f6fbfd] dark:from-slate-700 dark:to-slate-900 pb-12 md:pb-16 pt-12">
+    <div class="max-w-7xl mx-auto px-6 md:px-8">
       <!-- 主内容网格 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-        <!-- 左侧：邮箱订阅 -->
-        <div class="lg:col-span-2">
-          <h3 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3">订阅通讯</h3>
-          <p class="text-slate-700 dark:text-slate-300 text-sm mb-4">想要了解最新的内容发布？输入你的邮箱加入我的免费通讯：</p>
-          <div class="flex gap-2">
-            <input 
-              type="email" 
-              placeholder="your@email.com" 
-              class="flex-1 px-4 py-2 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button class="px-4 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold rounded-lg hover:opacity-80 transition-opacity">
-              →
-            </button>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <!-- 左侧：网站简介 -->
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3">关于本站</h3>
+          <p class="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+            专注于前端全栈技术分享，记录成长历程，分享学习心得。欢迎交流和反馈。
+          </p>
         </div>
         
-        <!-- 分类导航 -->
+        <!-- 中间：快速导航 -->
         <div>
-          <h4 class="font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">分类</h4>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">导航</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">CSS</a></li>
-            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">JavaScript</a></li>
-            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">React</a></li>
-            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Astro</a></li>
+            <li><a href="/" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">首页</a></li>
+            <li><a href="/blog" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">博客</a></li>
+            <li><a href="/tags" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">标签</a></li>
+            <li><a href="/about" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">关于</a></li>
           </ul>
         </div>
         
-        <!-- 通用导航 -->
+        <!-- 右侧：社交和链接 -->
         <div>
-          <h4 class="font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">通用</h4>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3 text-sm uppercase">社交</h4>
           <ul class="space-y-2 text-sm">
-            <li><a href="/about" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">关于</a></li>
-            <li><a href="/blog" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">博客</a></li>
-            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">联系</a></li>
-            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">RSS</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">GitHub</a></li>
+            <li><a href="/rss.xml" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">RSS 订阅</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Twitter</a></li>
+            <li><a href="#" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">邮件联系</a></li>
           </ul>
         </div>
       </div>
