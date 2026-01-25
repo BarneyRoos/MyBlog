@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro"
 import BlueprintBanner from "../components/BlueprintBanner"
 import { getCollection } from "astro:content"
 
-const pageTitle = "低维展开 - 前端全栈成长之路"
+const pageTitle = "海川的日志"
 const allPosts = await getCollection("blog")
 const recentPosts = allPosts
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
