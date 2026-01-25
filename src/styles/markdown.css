@@ -467,6 +467,68 @@
   }
 }
 
+/* ========== 练习链接样式 ========== */
+.markdown-body .practice-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  margin: 1em 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.markdown-body .practice-link::before {
+  content: "▶";
+  font-size: 0.8em;
+  margin-right: 4px;
+  transition: transform 0.3s ease;
+}
+
+.markdown-body .practice-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  color: white !important;
+  border-bottom: none;
+}
+
+.markdown-body .practice-link:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.markdown-body .practice-link:hover::before {
+  transform: translateX(4px);
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .markdown-body .practice-link {
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  }
+
+  .markdown-body .practice-link:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .markdown-body .practice-link {
+    display: none;
+  }
+}
+
 /* ========== 打印样式 ========== */
 @media print {
   .markdown-body {

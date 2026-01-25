@@ -19,6 +19,8 @@ tags: ["教程", "Grid布局"]
 
 ## 案例 1：最简单的 2×2 网格
 
+<a href="javascript:void(0)" onclick="window.openPlaygroundDrawer()" class="practice-link">练习一下</a>
+
 ### 目标
 
 理解 `display: grid` 的基本作用，掌握 `grid-template-columns` 和 `grid-template-rows`。

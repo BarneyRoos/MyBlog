@@ -1,0 +1,607 @@
+---
+---
+
+<div id="playgroundDrawer" class="playground-drawer">
+  <div class="drawer-overlay"></div>
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <h2>代码练兵场</h2>
+      <button class="drawer-close" id="drawerClose">&times;</button>
+    </div>
+    
+    <div class="drawer-body">
+      <div class="editor-wrapper">
+        <div class="editors-panel">
+          <div class="editor-tab-buttons">
+            <button class="tab-btn active" data-tab="html">HTML</button>
+            <button class="tab-btn" data-tab="css">CSS</button>
+            <button class="tab-btn" data-tab="js">JavaScript</button>
+          </div>
+
+          <div class="editor-content">
+            <div class="editor-pane active" data-tab="html" id="drawerHtmlPane"></div>
+            <div class="editor-pane" data-tab="css" id="drawerCssPane"></div>
+            <div class="editor-pane" data-tab="js" id="drawerJsPane"></div>
+          </div>
+
+          <div class="editor-footer">
+            <select id="drawerThemeSelector" class="theme-selector">
+              <option value="vs">Light</option>
+              <option value="vs-dark" selected>Dark</option>
+              <option value="hc-black">High Contrast</option>
+            </select>
+            <button id="drawerClearBtn" class="btn-clear">清空</button>
+            <button id="drawerDownloadBtn" class="btn-download">下载</button>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <div class="preview-header">
+            <h3>预览</h3>
+            <button id="drawerRefreshBtn" class="btn-refresh" title="刷新预览">⟳</button>
+          </div>
+          <iframe id="drawerPreviewFrame" class="preview-iframe" sandbox="allow-scripts"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import * as monaco from 'monaco-editor';
+
+  // 默认模板
+  const defaultHTML = `<div class="container">
+  <h1>欢迎来到代码练兵场</h1>
+  <p>这是一个使用 Monaco Editor 的实时编辑预览工具</p>
+  <button class="btn">点击我</button>
+</div>`;
+
+  const defaultCSS = `.container {
+  max-width: 100%;
+  margin: 0;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #7f8c8d;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #2980b9;
+}`;
+
+  const defaultJS = `// 这里编写你的 JavaScript 代码
+document.querySelector('.btn').addEventListener('click', function() {
+  alert('你点击了按钮！');
+});`;
+
+  let drawerEditors: any = null;
+
+  // 扩展window类型
+  declare global {
+    interface Window {
+      openPlaygroundDrawer: () => void;
+      closePlaygroundDrawer: () => void;
+    }
+  }
+
+  // 打开Drawer的全局方法
+  window.openPlaygroundDrawer = function() {
+    const drawer = document.getElementById('playgroundDrawer');
+    if (!drawer) return;
+    
+    drawer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    
+    // 初始化编辑器（只初始化一次）
+    if (!drawerEditors) {
+      initDrawerEditors();
+    } else {
+      // 已存在则触发layout更新
+      drawerEditors.htmlEditor.layout();
+      drawerEditors.cssEditor.layout();
+      drawerEditors.jsEditor.layout();
+    }
+  };
+
+  // 关闭Drawer的全局方法
+  window.closePlaygroundDrawer = function() {
+    const drawer = document.getElementById('playgroundDrawer');
+    if (!drawer) return;
+    
+    drawer.classList.remove('open');
+    document.body.style.overflow = 'auto';
+  };
+
+  // 初始化Drawer编辑器
+  function initDrawerEditors() {
+    const drawer = document.getElementById('playgroundDrawer');
+    const htmlPane = document.getElementById('drawerHtmlPane') as HTMLElement;
+    const cssPane = document.getElementById('drawerCssPane') as HTMLElement;
+    const jsPane = document.getElementById('drawerJsPane') as HTMLElement;
+    const previewFrame = document.getElementById('drawerPreviewFrame') as HTMLIFrameElement;
+    
+    if (!drawer || !htmlPane || !cssPane || !jsPane || !previewFrame) return;
+    
+    const htmlEditor = monaco.editor.create(htmlPane, {
+      value: localStorage.getItem('drawerHtmlCode') || defaultHTML,
+      language: 'html',
+      theme: 'vs-dark',
+      fontSize: 13,
+      lineNumbers: 'on',
+      automaticLayout: true,
+      minimap: { enabled: false },
+      formatOnPaste: true,
+      formatOnType: true,
+    });
+
+    const cssEditor = monaco.editor.create(cssPane, {
+      value: localStorage.getItem('drawerCssCode') || defaultCSS,
+      language: 'css',
+      theme: 'vs-dark',
+      fontSize: 13,
+      lineNumbers: 'on',
+      automaticLayout: true,
+      minimap: { enabled: false },
+      formatOnPaste: true,
+      formatOnType: true,
+    });
+
+    const jsEditor = monaco.editor.create(jsPane, {
+      value: localStorage.getItem('drawerJsCode') || defaultJS,
+      language: 'javascript',
+      theme: 'vs-dark',
+      fontSize: 13,
+      lineNumbers: 'on',
+      automaticLayout: true,
+      minimap: { enabled: false },
+      formatOnPaste: true,
+      formatOnType: true,
+    });
+
+    const tabButtons = drawer.querySelectorAll('.tab-btn');
+    const editorPanes = drawer.querySelectorAll('.editor-pane');
+    const clearBtn = document.getElementById('drawerClearBtn') as HTMLButtonElement | null;
+    const downloadBtn = document.getElementById('drawerDownloadBtn') as HTMLButtonElement | null;
+    const refreshBtn = document.getElementById('drawerRefreshBtn') as HTMLButtonElement | null;
+    const themeSelector = document.getElementById('drawerThemeSelector') as HTMLSelectElement | null;
+
+    // 标签页切换
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const tabName = target?.dataset?.tab;
+        tabButtons.forEach(b => b.classList.remove('active'));
+        editorPanes.forEach(p => p.classList.remove('active'));
+        target.classList.add('active');
+        const pane = drawer.querySelector(`.editor-pane[data-tab="${tabName}"]`);
+        if (pane) pane.classList.add('active');
+        
+        setTimeout(() => {
+          htmlEditor.layout();
+          cssEditor.layout();
+          jsEditor.layout();
+        }, 0);
+      });
+    });
+
+    // 更新预览
+    function updatePreview() {
+      const html = htmlEditor.getValue();
+      const css = cssEditor.getValue();
+      const js = jsEditor.getValue();
+
+      const iframeContent = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #f5f5f5;
+        padding: 20px;
+      }
+      ${css}
+    </style>
+  </head>
+  <body>
+    ${html}
+    <script>
+      ${js}
+    <\/script>
+  </body>
+</html>`;
+
+      (previewFrame as any).srcdoc = iframeContent;
+      localStorage.setItem('drawerHtmlCode', html);
+      localStorage.setItem('drawerCssCode', css);
+      localStorage.setItem('drawerJsCode', js);
+    }
+
+    // 监听编辑器变化
+    htmlEditor.onDidChangeModelContent(updatePreview);
+    cssEditor.onDidChangeModelContent(updatePreview);
+    jsEditor.onDidChangeModelContent(updatePreview);
+
+    // 主题切换
+    if (themeSelector) {
+      themeSelector.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+        monaco.editor.setTheme(target.value);
+      });
+    }
+
+    // 清空
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+      if (confirm('确定要清空代码吗？')) {
+        htmlEditor.setValue('');
+        cssEditor.setValue('');
+        jsEditor.setValue('');
+        localStorage.removeItem('drawerHtmlCode');
+        localStorage.removeItem('drawerCssCode');
+        localStorage.removeItem('drawerJsCode');
+      }
+      });
+    }
+
+    // 下载
+    if (downloadBtn) {
+      downloadBtn.addEventListener('click', () => {
+      const html = htmlEditor.getValue();
+      const css = cssEditor.getValue();
+      const js = jsEditor.getValue();
+
+      const content = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Code</title>
+    <style>
+${css.split('\n').map(line => '      ' + line).join('\n')}
+    </style>
+  </head>
+  <body>
+${html.split('\n').map(line => '    ' + line).join('\n')}
+    <script>
+${js.split('\n').map(line => '      ' + line).join('\n')}
+    <\/script>
+  </body>
+</html>`;
+
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      a.click();
+      URL.revokeObjectURL(url);
+      });
+    }
+
+    // 刷新
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', updatePreview);
+    }
+
+    // 初始化预览
+    updatePreview();
+
+    // 保存编辑器实例
+    drawerEditors = { htmlEditor, cssEditor, jsEditor };
+  }
+
+  // 初始化事件监听
+  document.addEventListener('DOMContentLoaded', () => {
+    const drawer = document.getElementById('playgroundDrawer');
+    const drawerClose = document.getElementById('drawerClose');
+    const drawerOverlay = drawer?.querySelector('.drawer-overlay');
+
+    if (drawerClose && typeof window.closePlaygroundDrawer === 'function') {
+      drawerClose.addEventListener('click', window.closePlaygroundDrawer);
+    }
+    if (drawerOverlay && typeof window.closePlaygroundDrawer === 'function') {
+      drawerOverlay.addEventListener('click', window.closePlaygroundDrawer);
+    }
+  });
+
+  // ESC关闭
+  document.addEventListener('keydown', (e) => {
+    const drawer = document.getElementById('playgroundDrawer');
+    if (e.key === 'Escape' && drawer?.classList.contains('open')) {
+      window.closePlaygroundDrawer();
+    }
+  });
+</script>
+
+<style>
+  .playground-drawer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  .playground-drawer.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .drawer-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+
+  .drawer-content {
+    position: relative;
+    margin-left: auto;
+    width: 60%;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.3s;
+  }
+
+  .playground-drawer.open .drawer-content {
+    transform: translateX(0);
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #ecf0f1;
+    background: #f8f9fa;
+  }
+
+  .drawer-header h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #2c3e50;
+  }
+
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #7f8c8d;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+  }
+
+  .drawer-close:hover {
+    color: #2c3e50;
+  }
+
+  .drawer-body {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .drawer-body .editor-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    height: 100%;
+  }
+
+  .drawer-body .editors-panel {
+    border-radius: 0;
+    box-shadow: none;
+    border-right: 1px solid #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .drawer-body .preview-panel {
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  @media (max-width: 1200px) {
+    .drawer-content {
+      width: 75%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .drawer-content {
+      width: 100%;
+    }
+
+    .drawer-body .editor-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .drawer-body .editors-panel {
+      border-right: none;
+      border-bottom: 1px solid #ecf0f1;
+    }
+  }
+
+  /* 编辑器面板样式 */
+  .drawer-body .editor-tab-buttons {
+    display: flex;
+    border-bottom: 2px solid #ecf0f1;
+    background: #f8f9fa;
+  }
+
+  .drawer-body .tab-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #7f8c8d;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .drawer-body .tab-btn:hover {
+    background: #ecf0f1;
+    color: #2c3e50;
+  }
+
+  .drawer-body .tab-btn.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+    background: white;
+  }
+
+  .drawer-body .editor-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .drawer-body .editor-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+  }
+
+  .drawer-body .editor-pane.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .drawer-body .editor-footer {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    border-top: 1px solid #ecf0f1;
+    background: #f8f9fa;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .drawer-body .theme-selector {
+    padding: 4px 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 3px;
+    background: white;
+    color: #2c3e50;
+    cursor: pointer;
+    font-size: 11px;
+  }
+
+  .drawer-body .btn-clear,
+  .drawer-body .btn-download {
+    padding: 6px 12px;
+    border: 1px solid #bdc3c7;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+  }
+
+  .drawer-body .btn-clear:hover {
+    background: #e74c3c;
+    color: white;
+    border-color: #e74c3c;
+  }
+
+  .drawer-body .btn-download:hover {
+    background: #27ae60;
+    color: white;
+    border-color: #27ae60;
+  }
+
+  .drawer-body .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ecf0f1;
+    background: #f8f9fa;
+  }
+
+  .drawer-body .preview-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .drawer-body .btn-refresh {
+    padding: 4px 10px;
+    border: 1px solid #bdc3c7;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+
+  .drawer-body .btn-refresh:hover {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+  }
+
+  .drawer-body .preview-iframe {
+    flex: 1;
+    border: none;
+    background: white;
+  }
+</style>

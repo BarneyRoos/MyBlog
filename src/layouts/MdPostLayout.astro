@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PlaygroundDrawer from '../components/PlaygroundDrawer.astro';
 import '../styles/global.css';
 import "../styles/markdown.css"
 const { frontmatter, headings } = Astro.props;
@@ -62,6 +63,7 @@ const { frontmatter, headings } = Astro.props;
       </aside>
     </div>
   </div>
+  <PlaygroundDrawer />
 </BaseLayout>
 
 <style>
