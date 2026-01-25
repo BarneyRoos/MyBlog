@@ -63,6 +63,17 @@ const { frontmatter, headings } = Astro.props;
       </aside>
     </div>
   </div>
+
+  <button 
+    class="fixed z-50 bottom-8 right-28 w-12 h-12 p-3 flex items-center justify-center rounded-full shadow-lg bg-linear-to-br from-pink-400 via-violet-500 to-blue-500 text-white text-2xl hover:scale-110 transition-transform duration-200"
+    style="box-shadow:0 4px 24px 0 rgba(139,92,246,0.18);"
+    onclick="window.openPlaygroundDrawer()"
+    title="代码练兵场"
+  >
+    💻
+  </button>
+
+
   <PlaygroundDrawer />
 </BaseLayout>
 
