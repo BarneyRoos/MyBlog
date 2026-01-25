@@ -6,12 +6,21 @@ export async function getStaticPaths() {
   // const allPosts = Object.values(import.meta.glob('../posts/*.md', { eager: true }));
   const allPosts = await getCollection("blog");
 
-  // 收集所有文章的标签，得到一个不重复的标签列表
-  const uniqueTags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())];
+  // 收集所有文章的标签，得到一个不重复的标签列表，并过滤掉空值
+  const uniqueTags = [
+    ...new Set(
+      allPosts
+        .map((post: any) => post.data.tags || [])
+        .flat()
+        .filter((tag: any) => tag && tag.trim() !== "")
+    ),
+  ];
 
   // 为每个标签生成一个静态路径
   return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post: any) => post.data.tags.includes(tag));
+    const filteredPosts = allPosts.filter(
+      (post: any) => post.data.tags && post.data.tags.includes(tag)
+    );
     return {
       params: { tag },
       props: { posts: filteredPosts },

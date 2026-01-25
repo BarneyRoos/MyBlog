@@ -6,7 +6,7 @@ author: "海川"
 image:
   url: ""
   alt: ""
-tags: ["教程", "使用指南", ""]
+tags: ["教程", "使用指南"]
 ---
 
 ## 在markdown中添加练习链接
