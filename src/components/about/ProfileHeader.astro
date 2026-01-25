@@ -17,13 +17,14 @@ const { profile } = Astro.props;
 
 <div class="relative">
   <div class="absolute inset-0 bg-linear-to-r from-blue-100 to-indigo-100 rounded-2xl opacity-50"></div>
-  <div class="relative px-8 py-10 rounded-2xl border border-blue-200">
+  <div class="relative p-6 rounded-2xl border border-blue-200">
+    <h1 class="text-5xl font-bold mb-2 mt-0">
+      {profile.name}
+    </h1>
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <!-- 左侧：基本信息 -->
       <div>
-        <h1 class="text-5xl font-bold mb-2">
-          {profile.name}
-        </h1>
+        
         <p class="text-2xl text-gray-700 font-semibold mb-3">{profile.title}</p>
         <div class="space-y-2 text-gray-600">
           <p>📍 {profile.location} | 🎓 {profile.education}</p>
@@ -39,7 +40,10 @@ const { profile } = Astro.props;
         </a>
         <div class="flex items-center gap-2 text-gray-700">
           <span>📱</span>
-          <span>{profile.phone}</span>
+          <span id="phone-mask" style="cursor:pointer;user-select:none;">
+            <svg id="phone-hide-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+            <span id="phone-value" style="display:none;">{profile.phone}</span>
+          </span>
         </div>
         <a href={profile.blog} target="_blank" class="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors">
           <span>🌐</span>
@@ -49,3 +53,20 @@ const { profile } = Astro.props;
     </div>
   </div>
 </div>
+
+<script is:inline>
+  const mask = document.getElementById('phone-mask');
+  const phone = document.getElementById('phone-value');
+  const icon = document.getElementById('phone-hide-icon');
+  if(mask && phone && icon) {
+    mask.addEventListener('click', () => {
+      if(phone.style.display === 'none') {
+        phone.style.display = 'inline';
+        icon.style.display = 'none';
+      } else {
+        phone.style.display = 'none';
+        icon.style.display = 'inline';
+      }
+    });
+  }
+</script>
