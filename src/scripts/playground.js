@@ -42,8 +42,14 @@ p {
 }`;
 
 const defaultJS = `// 这里编写你的 JavaScript 代码
+let clickCount = 0;
 document.querySelector('.btn').addEventListener('click', function() {
-  alert('你点击了按钮！');
+  clickCount++;
+  const message = document.createElement('div');
+  message.textContent = '✓ 你点击了按钮' + clickCount + '次';
+  message.style.cssText = 'color: #27ae60; font-weight: bold; margin-top: 20px; padding: 10px; background: #ecf0f1; border-radius: 4px; text-align: center;';
+  this.parentElement.appendChild(message);
+  setTimeout(() => message.remove(), 1000);
 });`;
 
 // 初始化编辑器
@@ -161,31 +167,36 @@ export function initMonacoEditor() {
   jsEditor.onDidChangeModelContent(updatePreview);
 
   // 主题切换
-  themeSelector.addEventListener("change", (e) => {
-    const theme = e.target.value;
-    monaco.editor.setTheme(theme);
-  });
+  if (themeSelector) {
+    themeSelector.addEventListener("change", (e) => {
+      const theme = e.target.value;
+      monaco.editor.setTheme(theme);
+    });
+  }
 
   // 清空所有
-  clearBtn.addEventListener("click", () => {
-    if (confirm("确定要清空所有代码吗？")) {
-      htmlEditor.setValue("");
-      cssEditor.setValue("");
-      jsEditor.setValue("");
-      localStorage.removeItem("htmlCode");
-      localStorage.removeItem("cssCode");
-      localStorage.removeItem("jsCode");
-      updatePreview();
-    }
-  });
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      if (confirm("确定要清空所有代码吗？")) {
+        htmlEditor.setValue("");
+        cssEditor.setValue("");
+        jsEditor.setValue("");
+        localStorage.removeItem("htmlCode");
+        localStorage.removeItem("cssCode");
+        localStorage.removeItem("jsCode");
+        updatePreview();
+      }
+    });
+  }
 
   // 下载代码
-  downloadBtn.addEventListener("click", () => {
-    const html = htmlEditor.getValue();
-    const css = cssEditor.getValue();
-    const js = jsEditor.getValue();
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", () => {
+      const html = htmlEditor.getValue();
+      const css = cssEditor.getValue();
+      const js = jsEditor.getValue();
 
-    const content = `<!DOCTYPE html>
+      const content = `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -212,17 +223,20 @@ ${js
   </body>
 </html>`;
 
-    const blob = new Blob([content], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "index.html";
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+      const blob = new Blob([content], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "index.html";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
 
   // 刷新预览
-  refreshBtn.addEventListener("click", updatePreview);
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", updatePreview);
+  }
 
   // 初始化预览
   updatePreview();

@@ -18,16 +18,11 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      include: ["monaco-editor"],
+      exclude: ["monaco-editor"],
     },
     build: {
       rollupOptions: {
         external: ["tailwindcss"],
-        output: {
-          manualChunks: {
-            "monaco-editor": ["monaco-editor"],
-          },
-        },
       },
     },
   },
