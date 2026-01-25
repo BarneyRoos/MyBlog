@@ -50,6 +50,48 @@ export default function BlueprintBanner({
         ctx.lineTo(canvas.width, y);
         ctx.stroke();
       }
+
+      // ===== 移动光点与尾迹 =====
+      gridLights.forEach(light => {
+        ctx.save();
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = light.color;
+        ctx.fillStyle = light.color;
+        const t = (time * (light.speed * 0.1) + light.phase) % 1;
+        const gridSize = 30;
+        if (light.isVertical) {
+          const x = Math.round(light.pos * canvas.width / gridSize) * gridSize;
+          const y = Math.round(t * canvas.height);
+          // 主光点
+          ctx.globalAlpha = 1;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+          // 尾迹（渐隐）
+          for (let i = 1; i <= 5; i++) {
+            const fade = 1 - i / 5;
+            ctx.globalAlpha = fade * 0.3;
+            ctx.beginPath();
+            ctx.arc(x, y - i * 8, 0.7, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        } else {
+          const y = Math.round(light.pos * canvas.height / gridSize) * gridSize;
+          const x = Math.round((1 - t) * canvas.width);
+          ctx.globalAlpha = 1;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+          ctx.fill();
+          for (let i = 1; i <= 5; i++) {
+            const fade = 1 - i / 5;
+            ctx.globalAlpha = fade * 0.3;
+            ctx.beginPath();
+            ctx.arc(x + i * 8, y, 0.7, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        ctx.restore();
+      });
     };
 
     const drawBlueprint = () => {
@@ -122,6 +164,14 @@ export default function BlueprintBanner({
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
+  const gridLights = [
+    // 每个对象代表一个光点：{ x/y, isVertical, speed, phase, color }
+    { pos: 0.2, isVertical: true, speed: 0.008, phase: 0, color: 'rgba(0,255,255,0.9)' },
+    { pos: 0.5, isVertical: true, speed: 0.012, phase: Math.PI / 2, color: 'rgba(0,200,255,0.7)' },
+    { pos: 0.7, isVertical: false, speed: 0.01, phase: Math.PI, color: 'rgba(0,255,200,0.8)' },
+    { pos: 0.35, isVertical: false, speed: 0.007, phase: Math.PI / 3, color: 'rgba(0,180,255,0.7)' },
+  ];
 
   return (
     <section className="relative w-full overflow-hidden">
