@@ -124,13 +124,15 @@ const { frontmatter, headings } = Astro.props;
 </style>
 
 <script>
-  // 目录当前项高亮
+  // 目录当前项高亮 + 自动滚动跟随
   document.addEventListener('DOMContentLoaded', () => {
+    const tocSidebar = document.querySelector('.toc-sidebar') as HTMLElement;
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const id = entry.target.getAttribute('id');
-          const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+          const tocLink = document.querySelector(`.toc-link[href="#${id}"]`) as HTMLElement;
           
           if (entry.isIntersecting) {
             // 移除所有高亮
@@ -144,12 +146,25 @@ const { frontmatter, headings } = Astro.props;
             
             // 添加当前高亮
             if (tocLink) {
-              const htmlTocLink = tocLink as HTMLElement;
               const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-              htmlTocLink.style.color = isDark ? '#58a6ff' : '#0969da';
-              htmlTocLink.style.background = isDark ? '#1e293b' : '#e0f2fe';
-              htmlTocLink.style.fontWeight = '600';
-              htmlTocLink.style.borderLeftColor = isDark ? '#58a6ff' : '#0969da';
+              tocLink.style.color = isDark ? '#58a6ff' : '#0969da';
+              tocLink.style.background = isDark ? '#1e293b' : '#e0f2fe';
+              tocLink.style.fontWeight = '600';
+              tocLink.style.borderLeftColor = isDark ? '#58a6ff' : '#0969da';
+              
+              // 目录自动滚动到当前项
+              if (tocSidebar) {
+                const linkRect = tocLink.getBoundingClientRect();
+                const sidebarRect = tocSidebar.getBoundingClientRect();
+                const relativeTop = tocLink.offsetTop - tocSidebar.scrollTop;
+                
+                // 如果当前项不在可见区域，则滚动到中间
+                if (relativeTop < 50) {
+                  tocSidebar.scrollTop = tocLink.offsetTop - 100;
+                } else if (relativeTop + tocLink.offsetHeight > sidebarRect.height - 50) {
+                  tocSidebar.scrollTop = tocLink.offsetTop - sidebarRect.height + tocLink.offsetHeight + 100;
+                }
+              }
             }
           }
         });
