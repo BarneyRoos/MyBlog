@@ -149,7 +149,7 @@
   transition: all 0.25s ease;
   font-weight: 500;
 }
-.markdown-body a::after {
+.markdown-body a::before {
   content: "🌐";
   zoom: 0.8;
 }
