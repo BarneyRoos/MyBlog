@@ -148,6 +148,87 @@ export function initMonacoEditor() {
   <body>
     ${html}
     <script>
+      // 捕获console输出
+      window.addEventListener('error', function(e) {
+        window.parent.postMessage({
+          type: 'console',
+          method: 'error',
+          message: e.message,
+          stack: e.stack
+        }, '*');
+      });
+
+      window.addEventListener('message', function(e) {
+        if (e.data.type === 'console-clear') {
+          console.clear();
+        }
+      });
+
+      const originalLog = console.log;
+      const originalError = console.error;
+      const originalWarn = console.warn;
+      const originalInfo = console.info;
+
+      console.log = function(...args) {
+        originalLog.apply(console, args);
+        window.parent.postMessage({
+          type: 'console',
+          method: 'log',
+          message: args.map(arg => {
+            try {
+              return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+            } catch (e) {
+              return String(arg);
+            }
+          }).join(' ')
+        }, '*');
+      };
+
+      console.error = function(...args) {
+        originalError.apply(console, args);
+        window.parent.postMessage({
+          type: 'console',
+          method: 'error',
+          message: args.map(arg => {
+            try {
+              return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+            } catch (e) {
+              return String(arg);
+            }
+          }).join(' ')
+        }, '*');
+      };
+
+      console.warn = function(...args) {
+        originalWarn.apply(console, args);
+        window.parent.postMessage({
+          type: 'console',
+          method: 'warn',
+          message: args.map(arg => {
+            try {
+              return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+            } catch (e) {
+              return String(arg);
+            }
+          }).join(' ')
+        }, '*');
+      };
+
+      console.info = function(...args) {
+        originalInfo.apply(console, args);
+        window.parent.postMessage({
+          type: 'console',
+          method: 'info',
+          message: args.map(arg => {
+            try {
+              return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+            } catch (e) {
+              return String(arg);
+            }
+          }).join(' ')
+        }, '*');
+      };
+
       ${js}
     <\/script>
   </body>
@@ -159,6 +240,12 @@ export function initMonacoEditor() {
     localStorage.setItem("htmlCode", html);
     localStorage.setItem("cssCode", css);
     localStorage.setItem("jsCode", js);
+
+    // 清空console输出
+    const consoleOutput = document.getElementById("consoleOutput");
+    if (consoleOutput) {
+      consoleOutput.innerHTML = "";
+    }
   }
 
   // 监听编辑器内容变化
@@ -237,6 +324,44 @@ ${js
   if (refreshBtn) {
     refreshBtn.addEventListener("click", updatePreview);
   }
+
+  // Console清除
+  const consoleClearBtn = document.getElementById("consoleClearBtn");
+  const consoleOutput = document.getElementById("consoleOutput");
+
+  if (consoleClearBtn) {
+    consoleClearBtn.addEventListener("click", () => {
+      if (consoleOutput) {
+        consoleOutput.innerHTML = "";
+      }
+      previewFrame.contentWindow?.postMessage({ type: "console-clear" }, "*");
+    });
+  }
+
+  // 监听iframe的console消息
+  window.addEventListener("message", (e) => {
+    if (e.data.type === "console" && consoleOutput) {
+      const logDiv = document.createElement("div");
+      logDiv.className = `console-log console-${e.data.method}`;
+      const timeStr = new Date().toLocaleTimeString("zh-CN");
+      logDiv.textContent = `[${timeStr}] ${e.data.message}`;
+
+      // 根据消息类型设置颜色
+      let color = "#f0f0f0";
+      if (e.data.method === "error") {
+        color = "#ff5555";
+      } else if (e.data.method === "warn") {
+        color = "#ffb86c";
+      } else if (e.data.method === "info") {
+        color = "#5dade2";
+      }
+      logDiv.style.color = color;
+
+      consoleOutput.appendChild(logDiv);
+      // 自动滚动到底部
+      consoleOutput.scrollTop = consoleOutput.scrollHeight;
+    }
+  });
 
   // 初始化预览
   updatePreview();
