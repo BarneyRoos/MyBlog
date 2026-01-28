@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CodeEditor from '../components/CodeEditor.astro';
+import CodeEditor from '../components/CodeEditor.tsx';
 ---
 
 <BaseLayout title="代码练兵场 - 实时编辑和预览">
@@ -20,62 +20,8 @@ import CodeEditor from '../components/CodeEditor.astro';
       <p class="text-lg text-slate-600">使用 Monaco Editor 实时编写和预览 HTML、CSS、JavaScript 代码</p>
     </div>
 
-    <div class="grid grid-cols-2 gap-1 max-w-7xl mx-auto relative z-10" style="height: calc(100vh - 200px);">
-      <CodeEditor
-        htmlPaneId="htmlPane"
-        cssPaneId="cssPane"
-        jsPaneId="jsPane"
-        previewFrameId="previewFrame"
-        consoleOutputId="consoleOutput"
-        themeId="themeSelector"
-        clearBtnId="clearBtn"
-        downloadBtnId="downloadBtn"
-        refreshBtnId="refreshBtn"
-        consoleClearBtnId="consoleClearBtn"
-        storagePrefix="playground_"
-      />
+    <div class="max-w-7xl mx-auto relative z-10 h-full" style="height: calc(100vh - 200px);">
+      <CodeEditor client:only="react" storagePrefix="playground_" />
     </div>
   </div>
 </BaseLayout>
-
-<script>
-  import { createEditors, setupEditorListeners, generatePreviewHTML } from '../lib/editorUtils';
-
-  const config = {
-    htmlPaneId: 'htmlPane',
-    cssPaneId: 'cssPane',
-    jsPaneId: 'jsPane',
-    previewFrameId: 'previewFrame',
-    consoleOutputId: 'consoleOutput',
-    themeId: 'themeSelector',
-    clearBtnId: 'clearBtn',
-    downloadBtnId: 'downloadBtn',
-    refreshBtnId: 'refreshBtn',
-    consoleClearBtnId: 'consoleClearBtn',
-    storagePrefix: 'playground_',
-  };
-
-  const editors = createEditors(config);
-  const previewFrame = document.getElementById('previewFrame') as HTMLIFrameElement;
-  const consoleOutput = document.getElementById('consoleOutput') as HTMLElement;
-
-  function updatePreview() {
-    const html = editors.htmlEditor.getValue();
-    const css = editors.cssEditor.getValue();
-    const js = editors.jsEditor.getValue();
-
-    const iframeContent = generatePreviewHTML(html, css, js);
-    previewFrame.srcdoc = iframeContent;
-
-    localStorage.setItem('playground_htmlCode', html);
-    localStorage.setItem('playground_cssCode', css);
-    localStorage.setItem('playground_jsCode', js);
-
-    if (consoleOutput) {
-      consoleOutput.innerHTML = '';
-    }
-  }
-
-  setupEditorListeners(config, editors, updatePreview);
-  updatePreview();
-</script>

@@ -1,8 +1,15 @@
 ---
-import CodeEditor from './CodeEditor.astro';
+import CodeEditor from './CodeEditor.tsx';
+
+declare global {
+  interface Window {
+    openPlaygroundDrawer: () => void;
+    closePlaygroundDrawer: () => void;
+  }
+}
 ---
 
-<div id="playgroundDrawer" class="fixed right-0 top-0 w-full h-full flex z-50 transition-all duration-300" style="opacity: 0; visibility: hidden;">
+<div id="playgroundDrawer" class="fixed right-0 top-0 w-full h-full flex z-100 transition-all duration-300" style="opacity: 0; visibility: hidden;">
   <div class="drawer-overlay absolute left-0 top-0 w-full h-full bg-black/50 cursor-pointer"></div>
   <div class="drawer-content relative ml-auto w-3/5 h-full bg-white flex flex-col shadow-lg transform transition-transform duration-300" style="transform: translateX(100%);">
     <div class="flex justify-between items-center px-5 py-4 border-b border-gray-200 bg-gray-100">
@@ -11,30 +18,12 @@ import CodeEditor from './CodeEditor.astro';
     </div>
     
     <div class="flex-1 overflow-hidden">
-      <div class="grid grid-cols-2 gap-0 h-full">
-        <CodeEditor
-          htmlPaneId="drawerHtmlPane"
-          cssPaneId="drawerCssPane"
-          jsPaneId="drawerJsPane"
-          previewFrameId="drawerPreviewFrame"
-          consoleOutputId="drawerConsoleOutput"
-          themeId="drawerThemeSelector"
-          clearBtnId="drawerClearBtn"
-          downloadBtnId="drawerDownloadBtn"
-          refreshBtnId="drawerRefreshBtn"
-          consoleClearBtnId="drawerConsoleClearBtn"
-          storagePrefix="drawer_"
-        />
-      </div>
+      <CodeEditor client:only="react" storagePrefix="drawer_" />
     </div>
   </div>
 </div>
 
 <script>
-  import { createEditors, setupEditorListeners, generatePreviewHTML } from '../lib/editorUtils';
-
-  let drawerEditors: any = null;
-
   declare global {
     interface Window {
       openPlaygroundDrawer: () => void;
@@ -48,14 +37,6 @@ import CodeEditor from './CodeEditor.astro';
     
     drawer.classList.add('open');
     document.body.style.overflow = 'hidden';
-    
-    if (!drawerEditors) {
-      initDrawerEditors();
-    } else {
-      drawerEditors.htmlEditor.layout();
-      drawerEditors.cssEditor.layout();
-      drawerEditors.jsEditor.layout();
-    }
   };
 
   window.closePlaygroundDrawer = function() {
@@ -66,55 +47,15 @@ import CodeEditor from './CodeEditor.astro';
     document.body.style.overflow = 'auto';
   };
 
-  function initDrawerEditors() {
-    const config = {
-      htmlPaneId: 'drawerHtmlPane',
-      cssPaneId: 'drawerCssPane',
-      jsPaneId: 'drawerJsPane',
-      previewFrameId: 'drawerPreviewFrame',
-      consoleOutputId: 'drawerConsoleOutput',
-      themeId: 'drawerThemeSelector',
-      clearBtnId: 'drawerClearBtn',
-      downloadBtnId: 'drawerDownloadBtn',
-      refreshBtnId: 'drawerRefreshBtn',
-      consoleClearBtnId: 'drawerConsoleClearBtn',
-      storagePrefix: 'drawer_',
-    };
-
-    drawerEditors = createEditors(config);
-    const previewFrame = document.getElementById('drawerPreviewFrame') as HTMLIFrameElement;
-    const consoleOutput = document.getElementById('drawerConsoleOutput') as HTMLElement;
-
-    function updatePreview() {
-      const html = drawerEditors.htmlEditor.getValue();
-      const css = drawerEditors.cssEditor.getValue();
-      const js = drawerEditors.jsEditor.getValue();
-
-      const iframeContent = generatePreviewHTML(html, css, js);
-      previewFrame.srcdoc = iframeContent;
-
-      localStorage.setItem('drawer_htmlCode', html);
-      localStorage.setItem('drawer_cssCode', css);
-      localStorage.setItem('drawer_jsCode', js);
-
-      if (consoleOutput) {
-        consoleOutput.innerHTML = '';
-      }
-    }
-
-    setupEditorListeners(config, drawerEditors, updatePreview);
-    updatePreview();
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
     const drawer = document.getElementById('playgroundDrawer');
     const drawerClose = document.getElementById('drawerClose');
     const drawerOverlay = drawer?.querySelector('.drawer-overlay');
 
-    if (drawerClose && typeof window.closePlaygroundDrawer === 'function') {
+    if (drawerClose) {
       drawerClose.addEventListener('click', window.closePlaygroundDrawer);
     }
-    if (drawerOverlay && typeof window.closePlaygroundDrawer === 'function') {
+    if (drawerOverlay) {
       drawerOverlay.addEventListener('click', window.closePlaygroundDrawer);
     }
   });
@@ -126,7 +67,6 @@ import CodeEditor from './CodeEditor.astro';
     }
   });
 </script>
-
 <style>
   #playgroundDrawer.open {
     opacity: 1 !important;
@@ -135,45 +75,6 @@ import CodeEditor from './CodeEditor.astro';
 
   #playgroundDrawer.open .drawer-content {
     transform: translateX(0) !important;
-  }
-
-  .editor-pane.active {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .editor-pane:not(.active) {
-    opacity: 0 !important;
-    visibility: hidden !important;
-  }
-
-  .tab-btn.active {
-    color: #3498db !important;
-    border-bottom-color: #3498db !important;
-    background-color: white !important;
-  }
-
-  .console-log {
-    color: #f0f0f0 !important;
-    margin: 2px 0 !important;
-    padding: 0 !important;
-    word-break: break-all;
-    font-weight: 500 !important;
-  }
-
-  .console-log.console-error {
-    color: #ff5555 !important;
-    font-weight: 600 !important;
-  }
-
-  .console-log.console-warn {
-    color: #ffb86c !important;
-    font-weight: 600 !important;
-  }
-
-  .console-log.console-info {
-    color: #5dade2 !important;
-    font-weight: 500 !important;
   }
 
   @media (max-width: 1200px) {
