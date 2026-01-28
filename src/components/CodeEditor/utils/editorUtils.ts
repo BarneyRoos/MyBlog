@@ -45,6 +45,7 @@ document.querySelector('.btn').addEventListener('click', function() {
   clickCount++;
   const message = document.createElement('div');
   message.textContent = '✓ 你点击了按钮' + clickCount + '次';
+  console.log('按钮被点击了 ' + clickCount + ' 次');
   message.style.cssText = 'color: #27ae60; font-weight: bold; margin-top: 20px; padding: 10px; background: #ecf0f1; border-radius: 4px; text-align: center;';
   this.parentElement.appendChild(message);
   setTimeout(() => message.remove(), 1000);
