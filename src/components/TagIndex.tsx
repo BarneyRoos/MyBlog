@@ -127,7 +127,14 @@ export default function TagIndex({ tags, baseUrl, allPosts }: TagIndexProps) {
                     <a
                       key={tag}
                       href={`${baseUrl}tags/${tag}/`}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-gray-700 dark:text-blue-300 text-sm font-medium transition-colors hover:border-blue-400 dark:hover:border-blue-500"
+                      className={`
+                        inline-flex items-center gap-1 px-3 py-1.5 
+                        rounded-full bg-blue-50 dark:bg-blue-900/30 
+                        border border-blue-200 dark:border-blue-700 hover:bg-blue-100 dark:hover:bg-blue-900/50 
+                        text-gray-700 dark:text-blue-300 text-sm font-medium transition-colors 
+                        hover:border-blue-400 dark:hover:border-blue-500
+                        ${tag === "平台" ? " bg-yellow-200 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-200" : ""}
+                      `}
                     >
                       <span>{tag}</span>
                       <span className="text-xs bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-200 px-1.5 py-0.5 rounded-full font-semibold">
