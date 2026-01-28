@@ -182,7 +182,7 @@ export default function TagIndex({ tags, baseUrl, allPosts }: TagIndexProps) {
       </div>
 
       {/* 统计信息 */}
-      <div className="mt-8 p-6 bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-lg border border-slate-200 dark:border-slate-700">
+      <div className="mt-8 p-6 bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-lg border border-slate-200 dark:border-slate-700">
         <div className="flex justify-around text-center">
           <div>
             <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">

@@ -6,7 +6,7 @@ author: "海川"
 image:
   url: "https://docs.astro.build/assets/rose.webp"
   alt: "The Astro logo on a dark background with a pink glow."
-tags: ["astro", "静态网站"]
+tags: ["astro", "平台"]
 ---
 
 ## 简介
