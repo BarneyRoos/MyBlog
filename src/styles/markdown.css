@@ -98,7 +98,6 @@
   word-break: break-word;
   color: #34495e;
   font-feature-settings: "kern" 1;
-  text-indent: 1em;
 }
 
 .markdown-body strong {
